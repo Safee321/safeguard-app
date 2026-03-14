@@ -33,78 +33,27 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 .loc-bar.ready{color:var(--green);background:rgba(0,232,122,0.05)}
 .loc-bar.err{color:var(--red);background:rgba(255,45,45,0.05)}
 
-/* ===== EMERGENCY TICKER ===== */
-.emergency-ticker{
-  background:#0d0000;
-  border-bottom:0.5px solid rgba(255,45,45,0.2);
-  padding:0;
-  overflow:hidden;
-  position:relative;
-  height:42px;
-}
-.ticker-label{
-  position:absolute;left:0;top:0;bottom:0;
-  background:var(--red);
-  padding:0 14px;
-  display:flex;align-items:center;
-  font-family:'Syne',sans-serif;
-  font-size:10px;font-weight:700;
-  letter-spacing:1.5px;
-  z-index:2;
-  white-space:nowrap;
-  gap:6px;
-}
-.ticker-label::after{
-  content:'';
-  position:absolute;right:-10px;top:0;bottom:0;
-  width:10px;
-  background:linear-gradient(90deg,var(--red),transparent);
-}
-.ticker-track{
-  display:flex;
-  align-items:center;
-  height:100%;
-  padding-left:120px;
-  animation:tickerScroll 28s linear infinite;
-  white-space:nowrap;
-}
+/* EMERGENCY TICKER */
+.emergency-ticker{background:#0d0000;border-bottom:0.5px solid rgba(255,45,45,0.2);padding:0;overflow:hidden;position:relative;height:42px}
+.ticker-label{position:absolute;left:0;top:0;bottom:0;background:var(--red);padding:0 14px;display:flex;align-items:center;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;z-index:2;white-space:nowrap;gap:6px}
+.ticker-label::after{content:'';position:absolute;right:-10px;top:0;bottom:0;width:10px;background:linear-gradient(90deg,var(--red),transparent)}
+.ticker-track{display:flex;align-items:center;height:100%;padding-left:120px;animation:tickerScroll 28s linear infinite;white-space:nowrap}
 .ticker-track:hover{animation-play-state:paused}
-@keyframes tickerScroll{
-  0%{transform:translateX(0)}
-  100%{transform:translateX(-50%)}
-}
-.ticker-item{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:0 20px;
-  cursor:pointer;
-  transition:opacity 0.2s;
-  text-decoration:none;
-  color:inherit;
-}
+@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{display:inline-flex;align-items:center;gap:8px;padding:0 20px;cursor:pointer;transition:opacity 0.2s;text-decoration:none;color:inherit}
 .ticker-item:active{opacity:0.7}
-.ticker-dot{
-  width:7px;height:7px;
-  border-radius:50%;
-  flex-shrink:0;
-}
+.ticker-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .ticker-name{font-size:11px;font-weight:500;color:var(--text2);white-space:nowrap}
-.ticker-num{
-  font-family:'Syne',sans-serif;
-  font-size:13px;font-weight:700;
-  white-space:nowrap;
-}
+.ticker-num{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;white-space:nowrap}
 .ticker-num.police{color:#4499ff}
 .ticker-num.fire{color:#ff6622}
 .ticker-num.amb{color:#44dd88}
 .ticker-num.women{color:#ff44aa}
-.ticker-num.child{color:#ffaa22}
 .ticker-sep{color:var(--text3);padding:0 8px;font-size:16px}
 
 /* TABS */
 .tabs{display:flex;background:var(--bg2);border-bottom:0.5px solid var(--border);position:sticky;top:61px;z-index:90;overflow-x:auto}
-.tab{flex:1;min-width:60px;padding:13px 6px;text-align:center;font-size:11px;font-weight:500;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.25s;letter-spacing:0.4px;white-space:nowrap}
+.tab{flex:1;min-width:55px;padding:13px 4px;text-align:center;font-size:10px;font-weight:500;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.25s;letter-spacing:0.3px;white-space:nowrap}
 .tab.active{color:var(--red);border-bottom-color:var(--red)}
 
 /* PAGE */
@@ -113,91 +62,188 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 @keyframes pageIn{from{opacity:0;transform:translateY(14px) scale(0.99)}to{opacity:1;transform:translateY(0) scale(1)}}
 
 /* CARD */
-.card{background:rgba(255,255,255,0.025);border:0.5px solid var(--border);border-radius:18px;padding:20px;position:relative;overflow:hidden;transition:border-color 0.3s}
+.card{background:rgba(255,255,255,0.025);border:0.5px solid var(--border);border-radius:18px;padding:20px;position:relative;overflow:hidden}
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.07),transparent)}
 .card-label{font-size:10px;font-weight:500;color:var(--text3);letter-spacing:1.8px;text-transform:uppercase;margin-bottom:16px}
 
-/* EMERGENCY CARDS GRID */
-.emergency-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-bottom:4px;
-}
-.em-card{
-  background:rgba(255,255,255,0.02);
-  border:0.5px solid var(--border);
-  border-radius:14px;
-  padding:14px;
-  display:flex;flex-direction:column;gap:6px;
-  cursor:pointer;
-  text-decoration:none;
-  transition:all 0.2s;
+/* ===== DETECTION FEATURE ===== */
+.detection-hero{
+  background:linear-gradient(135deg,rgba(255,136,0,0.08),rgba(255,45,45,0.05));
+  border:0.5px solid rgba(255,136,0,0.2);
+  border-radius:18px;
+  padding:20px;
   position:relative;
   overflow:hidden;
 }
-.em-card::before{
-  content:'';
-  position:absolute;inset:0;
-  opacity:0;
-  transition:opacity 0.2s;
-  border-radius:14px;
+.detection-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,136,0,0.3),transparent)}
+.detection-status-row{
+  display:flex;justify-content:space-between;
+  align-items:center;margin-bottom:16px;
 }
-.em-card:active{transform:scale(0.96)}
-.em-card:active::before{opacity:1}
-.em-card.police{border-color:rgba(68,153,255,0.2)}
-.em-card.police::before{background:rgba(68,153,255,0.08)}
-.em-card.fire{border-color:rgba(255,102,34,0.2)}
-.em-card.fire::before{background:rgba(255,102,34,0.08)}
-.em-card.amb{border-color:rgba(68,221,136,0.2)}
-.em-card.amb::before{background:rgba(68,221,136,0.08)}
-.em-card.women{border-color:rgba(255,68,170,0.2)}
-.em-card.women::before{background:rgba(255,68,170,0.08)}
-.em-card.child{border-color:rgba(255,170,34,0.2)}
-.em-card.child::before{background:rgba(255,170,34,0.08)}
-.em-card.disaster{border-color:rgba(153,68,255,0.2)}
-.em-card.disaster::before{background:rgba(153,68,255,0.08)}
-.em-icon{font-size:22px;margin-bottom:2px}
-.em-label{font-size:10px;color:var(--text3);letter-spacing:0.5px}
-.em-number{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;letter-spacing:-0.5px}
-.em-number.police{color:#4499ff}
-.em-number.fire{color:#ff6622}
-.em-number.amb{color:#44dd88}
-.em-number.women{color:#ff44aa}
-.em-number.child{color:#ffaa22}
-.em-number.disaster{color:#9944ff}
-.em-sublabel{font-size:9px;color:var(--text3);letter-spacing:0.3px}
-.em-call-badge{
-  position:absolute;top:10px;right:10px;
-  background:rgba(255,255,255,0.06);
-  border-radius:6px;padding:3px 7px;
-  font-size:9px;color:var(--text3);
-  font-weight:500;letter-spacing:0.5px;
+.detection-title{
+  font-family:'Syne',sans-serif;
+  font-size:16px;font-weight:800;
+  color:var(--text);
+}
+.detection-subtitle{font-size:12px;color:var(--text3);margin-top:2px}
+.det-badge{
+  padding:6px 14px;border-radius:30px;
+  font-size:10px;font-weight:700;
+  font-family:'Syne',sans-serif;letter-spacing:1.5px;
+}
+.det-badge.off{background:rgba(255,255,255,0.05);color:var(--text3);border:0.5px solid var(--border2)}
+.det-badge.on{background:rgba(255,136,0,0.1);color:#ff8800;border:0.5px solid rgba(255,136,0,0.3);animation:detGlow 2s infinite}
+.det-badge.alert{background:rgba(255,45,45,0.15);color:var(--red);border:0.5px solid rgba(255,45,45,0.4);animation:detGlow 0.5s infinite}
+@keyframes detGlow{0%,100%{box-shadow:0 0 6px rgba(255,136,0,0.2)}50%{box-shadow:0 0 18px rgba(255,136,0,0.5)}}
+
+/* SENSOR BARS */
+.sensor-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:14px 0}
+.sensor-box{
+  background:rgba(255,255,255,0.03);
+  border:0.5px solid var(--border);
+  border-radius:12px;padding:10px;
+  text-align:center;
+}
+.sensor-label{font-size:9px;color:var(--text3);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:6px}
+.sensor-val{
+  font-family:'Syne',sans-serif;
+  font-size:16px;font-weight:800;
+  color:var(--text);
+  transition:color 0.3s;
+}
+.sensor-val.warn{color:#ffaa22}
+.sensor-val.danger{color:var(--red)}
+.sensor-bar{
+  height:3px;border-radius:3px;
+  background:var(--border2);
+  margin-top:6px;overflow:hidden;
+}
+.sensor-fill{
+  height:100%;border-radius:3px;
+  background:var(--green);
+  transition:width 0.2s,background 0.2s;
+  width:0%;
+}
+.sensor-fill.warn{background:#ffaa22}
+.sensor-fill.danger{background:var(--red)}
+
+/* DETECTION TOGGLE BTN */
+.det-toggle{
+  width:100%;padding:16px;
+  border-radius:13px;
+  background:rgba(255,136,0,0.08);
+  border:0.5px solid rgba(255,136,0,0.25);
+  color:#ff8800;
+  font-family:'Syne',sans-serif;
+  font-size:14px;font-weight:700;
+  letter-spacing:1px;cursor:pointer;
+  display:flex;align-items:center;
+  justify-content:center;gap:10px;
+  transition:all 0.2s;
+}
+.det-toggle:active{transform:scale(0.98)}
+.det-toggle.on{
+  background:rgba(255,45,45,0.08);
+  border-color:rgba(255,45,45,0.3);
+  color:var(--red);
 }
 
-/* LOCATION-BASED NEARBY */
-.nearby-card{
-  background:rgba(68,153,255,0.04);
-  border:0.5px solid rgba(68,153,255,0.15);
-  border-radius:14px;
-  padding:14px 16px;
-  display:flex;align-items:center;justify-content:space-between;
-  margin-top:2px;
+/* SENSITIVITY */
+.sensitivity-row{
+  display:flex;gap:8px;
+  margin-top:12px;
 }
-.nearby-info{flex:1}
-.nearby-type{font-size:10px;color:#4499ff;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
-.nearby-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px}
-.nearby-dist{font-size:11px;color:var(--text3)}
-.nearby-call{
-  background:rgba(68,153,255,0.12);
-  border:0.5px solid rgba(68,153,255,0.3);
-  color:#4499ff;
+.sens-btn{
+  flex:1;padding:9px;
   border-radius:10px;
-  padding:10px 14px;
+  border:0.5px solid var(--border2);
+  background:transparent;
+  color:var(--text3);
+  font-size:11px;cursor:pointer;
+  text-align:center;
+  transition:all 0.2s;
+  font-family:'DM Sans',sans-serif;
+}
+.sens-btn.on{border-color:#ff8800;color:#ff8800;background:rgba(255,136,0,0.08)}
+
+/* DETECTION LOG */
+.det-log-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 0;
+  border-bottom:0.5px solid var(--border);
+  animation:slideIn 0.3s ease;
+}
+@keyframes slideIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+.det-log-icon{
+  width:32px;height:32px;
+  border-radius:50%;
+  display:flex;align-items:center;
+  justify-content:center;
+  font-size:14px;
+  flex-shrink:0;
+}
+.det-log-icon.fall{background:rgba(255,136,0,0.15)}
+.det-log-icon.snatch{background:rgba(255,45,45,0.15)}
+.det-log-icon.struggle{background:rgba(153,68,255,0.15)}
+.det-log-type{font-size:12px;font-weight:500;color:var(--text)}
+.det-log-time{font-size:10px;color:var(--text3);margin-top:2px}
+.det-log-force{margin-left:auto;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#ff8800}
+
+/* COUNTDOWN OVERLAY */
+.countdown-overlay{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.92);
+  z-index:400;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  animation:fadeIn 0.2s ease;
+}
+.countdown-overlay.show{display:flex}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.countdown-type{
+  font-size:13px;color:#ff8800;
+  letter-spacing:2px;text-transform:uppercase;
+  text-align:center;
+}
+.countdown-icon{font-size:60px;animation:shake 0.5s infinite}
+@keyframes shake{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+.countdown-num{
   font-family:'Syne',sans-serif;
-  font-size:13px;font-weight:700;
-  text-decoration:none;
-  white-space:nowrap;
+  font-size:80px;font-weight:800;
+  color:var(--red);
+  line-height:1;
+  animation:countPulse 1s infinite;
+}
+@keyframes countPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.countdown-msg{
+  font-size:16px;color:var(--text2);
+  text-align:center;line-height:1.6;
+  padding:0 30px;
+}
+.countdown-cancel{
+  padding:16px 40px;
+  border-radius:40px;
+  background:transparent;
+  border:1.5px solid var(--green);
+  color:var(--green);
+  font-family:'Syne',sans-serif;
+  font-size:16px;font-weight:700;
+  letter-spacing:1px;cursor:pointer;
+  transition:all 0.2s;
+}
+.countdown-cancel:active{background:rgba(0,232,122,0.1)}
+.countdown-bar{
+  width:260px;height:4px;
+  background:rgba(255,255,255,0.1);
+  border-radius:4px;overflow:hidden;
+}
+.countdown-progress{
+  height:100%;background:var(--red);
+  border-radius:4px;
+  transition:width 1s linear;
 }
 
 /* SOS */
@@ -209,7 +255,7 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 .ring-3{width:230px;height:230px;animation-delay:1.6s}
 @keyframes ringOut{0%{opacity:0.8;transform:scale(0.85)}100%{opacity:0;transform:scale(1.05)}}
 .sos-btn{width:148px;height:148px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#ff5555 0%,#dd1111 45%,#880000 100%);border:none;color:white;font-family:'Syne',sans-serif;font-weight:800;font-size:26px;letter-spacing:4px;cursor:pointer;position:relative;z-index:5;box-shadow:0 0 0 1px rgba(255,255,255,0.08) inset,0 0 60px rgba(255,45,45,0.45),0 0 120px rgba(255,45,45,0.2),0 8px 32px rgba(0,0,0,0.6);transition:transform 0.12s,box-shadow 0.12s}
-.sos-btn:active{transform:scale(0.91);box-shadow:0 0 0 1px rgba(255,255,255,0.1) inset,0 0 80px rgba(255,45,45,0.8),0 0 160px rgba(255,45,45,0.4),0 4px 16px rgba(0,0,0,0.6)}
+.sos-btn:active{transform:scale(0.91)}
 .sos-btn.firing{animation:sosFire 0.6s ease}
 @keyframes sosFire{0%{transform:scale(1)}30%{transform:scale(0.88)}60%{transform:scale(1.06)}100%{transform:scale(1)}}
 .sos-hint{font-size:12px;color:var(--text3);text-align:center;line-height:1.8}
@@ -217,11 +263,11 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 .escape-btn{width:100%;background:rgba(68,102,255,0.07);border:0.5px solid rgba(68,102,255,0.25);border-radius:13px;padding:17px;color:#7788ff;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all 0.2s;font-family:'DM Sans',sans-serif}
 .escape-btn:active{background:rgba(68,102,255,0.14);transform:scale(0.98)}
 
-/* LOCATION GRID */
+/* LOCATION */
 .loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .loc-box{background:rgba(0,232,122,0.05);border:0.5px solid rgba(0,232,122,0.12);border-radius:12px;padding:12px 14px}
 .loc-box-label{font-size:10px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}
-.loc-box-val{font-size:14px;color:var(--green);font-family:'Syne',sans-serif;font-weight:700;letter-spacing:-0.3px}
+.loc-box-val{font-size:14px;color:var(--green);font-family:'Syne',sans-serif;font-weight:700}
 .loc-acc-row{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;padding-top:4px}
 .maps-link{font-size:11px;color:#4488ff;text-decoration:none;display:flex;align-items:center;gap:4px}
 
@@ -236,15 +282,14 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 .t-prog.warn{stroke:#ffaa22}
 .t-prog.danger{stroke:var(--red)}
 .timer-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
-.timer-num{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--text);letter-spacing:-1px}
+.timer-num{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--text)}
 .timer-sub{font-size:10px;color:var(--text3);letter-spacing:0.5px}
 .intervals{display:flex;gap:8px;width:100%}
 .int-opt{flex:1;padding:10px;border-radius:10px;border:0.5px solid var(--border2);background:transparent;color:var(--text3);font-size:12px;cursor:pointer;text-align:center;transition:all 0.2s;font-family:'DM Sans',sans-serif}
 .int-opt.on{border-color:var(--green);color:var(--green);background:var(--green-dim)}
 .ci-start{width:100%;padding:17px;border-radius:13px;background:linear-gradient(135deg,var(--red),#cc0000);border:none;color:white;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;cursor:pointer;box-shadow:0 4px 24px rgba(255,45,45,0.3);transition:all 0.2s;margin-top:4px}
-.ci-start:active{transform:scale(0.98)}
 .ci-start.on{background:rgba(255,255,255,0.05);box-shadow:none;border:0.5px solid var(--border2);color:var(--text2)}
-.safe-btn{width:100%;padding:20px;border-radius:13px;background:transparent;border:1.5px solid var(--green);color:var(--green);font-family:'Syne',sans-serif;font-size:17px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;box-shadow:0 0 30px rgba(0,232,122,0.1)}
+.safe-btn{width:100%;padding:20px;border-radius:13px;background:transparent;border:1.5px solid var(--green);color:var(--green);font-family:'Syne',sans-serif;font-size:17px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s}
 .safe-btn:active{background:rgba(0,232,122,0.08);transform:scale(0.97)}
 
 /* GUARDIAN */
@@ -254,7 +299,6 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 .g-badge.on{background:rgba(0,232,122,0.08);color:var(--green);border:0.5px solid rgba(0,232,122,0.25);animation:gBadgeGlow 2.5s infinite}
 @keyframes gBadgeGlow{0%,100%{box-shadow:0 0 6px rgba(0,232,122,0.2)}50%{box-shadow:0 0 18px rgba(0,232,122,0.5)}}
 .g-toggle{width:100%;padding:15px;border-radius:13px;background:rgba(0,232,122,0.06);border:0.5px solid rgba(0,232,122,0.2);color:var(--green);font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px}
-.g-toggle:active{transform:scale(0.98)}
 .g-link-box{background:#0c0c0c;border:0.5px solid var(--border2);border-radius:11px;padding:13px 14px;font-size:11px;color:#4488ff;word-break:break-all;text-align:center;line-height:1.8;margin:13px 0}
 .g-share-row{display:flex;gap:8px}
 .g-share-btn{flex:1;padding:12px;border-radius:11px;background:transparent;border:0.5px solid var(--border2);color:var(--text2);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
@@ -266,29 +310,43 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 .inp-field:focus{border-color:rgba(255,45,45,0.5)}
 .inp-row{display:flex;gap:8px;align-items:flex-start}
 .inp-row .inp-field{margin:0;flex:1}
-.add-contact-btn{background:var(--red);border:none;color:white;border-radius:11px;padding:13px 16px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;box-shadow:0 2px 12px rgba(255,45,45,0.25);transition:all 0.2s}
+.add-contact-btn{background:var(--red);border:none;color:white;border-radius:11px;padding:13px 16px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all 0.2s}
 .add-contact-btn:active{transform:scale(0.96)}
 .hint-txt{font-size:11px;color:var(--text3);margin-top:5px;line-height:1.6}
-.c-item{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.02);border:0.5px solid var(--border);border-radius:12px;padding:13px 14px;margin-top:9px;animation:slideIn 0.25s cubic-bezier(0.34,1.56,0.64,1)}
-@keyframes slideIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+.c-item{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.02);border:0.5px solid var(--border);border-radius:12px;padding:13px 14px;margin-top:9px}
 .c-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--red),#880000);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;flex-shrink:0}
 .c-name{font-size:13px;font-weight:500;color:var(--text)}
 .c-num{font-size:11px;color:var(--text3);margin-top:3px}
-.c-del{margin-left:auto;background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;padding:4px;transition:color 0.2s}
-.c-del:active{color:var(--red)}
-.save-btn-sm{background:rgba(255,255,255,0.06);border:0.5px solid var(--border2);color:var(--text2);border-radius:11px;padding:13px 16px;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.c-del{margin-left:auto;background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;padding:4px}
+.save-btn-sm{background:rgba(255,255,255,0.06);border:0.5px solid var(--border2);color:var(--text2);border-radius:11px;padding:13px 16px;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif}
+
+/* EMERGENCY GRID */
+.emergency-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.em-card{background:rgba(255,255,255,0.02);border:0.5px solid var(--border);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:6px;cursor:pointer;text-decoration:none;transition:all 0.2s;position:relative;overflow:hidden}
+.em-card:active{transform:scale(0.96)}
+.em-card.police{border-color:rgba(68,153,255,0.2)}
+.em-card.fire{border-color:rgba(255,102,34,0.2)}
+.em-card.amb{border-color:rgba(68,221,136,0.2)}
+.em-card.women{border-color:rgba(255,68,170,0.2)}
+.em-icon{font-size:22px}
+.em-label{font-size:10px;color:var(--text3)}
+.em-number{font-family:'Syne',sans-serif;font-size:18px;font-weight:800}
+.em-number.police{color:#4499ff}
+.em-number.fire{color:#ff6622}
+.em-number.amb{color:#44dd88}
+.em-number.women{color:#ff44aa}
+.em-call-badge{position:absolute;top:10px;right:10px;background:rgba(255,255,255,0.06);border-radius:6px;padding:3px 7px;font-size:9px;color:var(--text3)}
 
 /* HISTORY */
 .hist-item{padding:13px 0;border-bottom:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .hist-coords{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--green);margin-bottom:4px}
 .hist-time{font-size:10px;color:var(--text3)}
-.hist-maps{background:rgba(0,232,122,0.07);border:0.5px solid rgba(0,232,122,0.2);color:var(--green);border-radius:9px;padding:6px 11px;font-size:10px;font-weight:500;text-decoration:none;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.hist-maps{background:rgba(0,232,122,0.07);border:0.5px solid rgba(0,232,122,0.2);color:var(--green);border-radius:9px;padding:6px 11px;font-size:10px;font-weight:500;text-decoration:none;white-space:nowrap}
 .empty-msg{font-size:13px;color:var(--text3);text-align:center;padding:24px;line-height:1.7}
 
 /* FAKE CALL */
-.fc-screen{display:none;position:fixed;inset:0;background:#06061a;z-index:500;flex-direction:column;align-items:center;justify-content:space-between;padding:90px 32px 64px;animation:fcSlide 0.3s cubic-bezier(0.34,1.56,0.64,1)}
+.fc-screen{display:none;position:fixed;inset:0;background:#06061a;z-index:500;flex-direction:column;align-items:center;justify-content:space-between;padding:90px 32px 64px}
 .fc-screen.show{display:flex}
-@keyframes fcSlide{from{opacity:0;transform:scale(1.04)}to{opacity:1;transform:scale(1)}}
 .fc-label{font-size:12px;color:#7777cc;letter-spacing:2.5px;text-transform:uppercase;text-align:center;margin-bottom:14px}
 .fc-avatar{width:108px;height:108px;border-radius:50%;background:linear-gradient(135deg,#4455ff,#9944ff);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:white;margin:0 auto 20px;animation:fcRing 2s infinite}
 @keyframes fcRing{0%,100%{box-shadow:0 0 0 0 rgba(80,80,255,0.5)}40%{box-shadow:0 0 0 16px rgba(80,80,255,0.2)}80%{box-shadow:0 0 0 32px rgba(80,80,255,0)}}
@@ -298,8 +356,8 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 .fc-action-btn{width:74px;height:74px;border-radius:50%;border:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;transition:transform 0.12s}
 .fc-action-btn:active{transform:scale(0.9)}
 .fc-action-btn span{font-size:11px;color:white;font-family:'DM Sans',sans-serif}
-.fc-decline{background:linear-gradient(135deg,#ff4444,#cc0000);box-shadow:0 4px 20px rgba(255,45,45,0.4)}
-.fc-accept{background:linear-gradient(135deg,#44cc44,#226622);box-shadow:0 4px 20px rgba(50,200,50,0.4)}
+.fc-decline{background:linear-gradient(135deg,#ff4444,#cc0000)}
+.fc-accept{background:linear-gradient(135deg,#44cc44,#226622)}
 .fc-icon{font-size:26px}
 
 /* TOAST */
@@ -308,6 +366,7 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
 .toast.red{border-color:rgba(255,45,45,0.4);color:#ff7777}
 .toast.green{border-color:rgba(0,232,122,0.4);color:var(--green)}
 .toast.blue{border-color:rgba(100,130,255,0.4);color:#8899ff}
+.toast.orange{border-color:rgba(255,136,0,0.4);color:#ff8800}
 </style>
 </head>
 <body>
@@ -323,20 +382,18 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
   </div>
 </div>
 
-<!-- LOCATION BAR -->
 <div class="loc-bar" id="locBar">📍 Acquiring location...</div>
 
 <!-- EMERGENCY TICKER -->
 <div class="emergency-ticker">
   <div class="ticker-label">🚨 EMERGENCY</div>
-  <div class="ticker-track" id="tickerTrack">
-    <!-- filled by JS -->
-  </div>
+  <div class="ticker-track" id="tickerTrack"></div>
 </div>
 
 <!-- TABS -->
 <div class="tabs">
   <div class="tab active" onclick="showTab('home',this)">Home</div>
+  <div class="tab" onclick="showTab('detection',this)">Detection</div>
   <div class="tab" onclick="showTab('emergency',this)">Emergency</div>
   <div class="tab" onclick="showTab('checkin',this)">Check-in</div>
   <div class="tab" onclick="showTab('guardian',this)">Guardian</div>
@@ -344,7 +401,7 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
   <div class="tab" onclick="showTab('history',this)">History</div>
 </div>
 
-<!-- ======= HOME ======= -->
+<!-- HOME TAB -->
 <div class="page active" id="tab-home">
   <div class="sos-section">
     <div class="sos-outer">
@@ -358,25 +415,15 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
       WhatsApp + Google Maps location
     </p>
   </div>
-
   <div class="card">
     <div class="card-label">Escape Feature</div>
-    <button class="escape-btn" onclick="startFakeCall()">
-      📲 &nbsp;Trigger Fake Incoming Call
-    </button>
+    <button class="escape-btn" onclick="startFakeCall()">📲 &nbsp;Trigger Fake Incoming Call</button>
   </div>
-
   <div class="card">
     <div class="card-label">Current Location</div>
     <div class="loc-grid">
-      <div class="loc-box">
-        <div class="loc-box-label">Latitude</div>
-        <div class="loc-box-val" id="latVal">--</div>
-      </div>
-      <div class="loc-box">
-        <div class="loc-box-label">Longitude</div>
-        <div class="loc-box-val" id="lngVal">--</div>
-      </div>
+      <div class="loc-box"><div class="loc-box-label">Latitude</div><div class="loc-box-val" id="latVal">--</div></div>
+      <div class="loc-box"><div class="loc-box-label">Longitude</div><div class="loc-box-val" id="lngVal">--</div></div>
       <div class="loc-acc-row">
         <span style="font-size:11px;color:var(--text3)">Accuracy</span>
         <span style="font-size:12px;color:var(--text2)" id="accVal">--</span>
@@ -386,126 +433,119 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
   </div>
 </div>
 
-<!-- ======= EMERGENCY ======= -->
-<div class="page" id="tab-emergency">
+<!-- DETECTION TAB -->
+<div class="page" id="tab-detection">
 
+  <!-- MAIN DETECTION CARD -->
+  <div class="detection-hero">
+    <div class="detection-status-row">
+      <div>
+        <div class="detection-title">Fall & Snatch Detection</div>
+        <div class="detection-subtitle">Motion sensor se auto SOS</div>
+      </div>
+      <div class="det-badge off" id="detBadge">OFF</div>
+    </div>
+
+    <!-- LIVE SENSOR BARS -->
+    <div class="sensor-grid">
+      <div class="sensor-box">
+        <div class="sensor-label">X-Axis</div>
+        <div class="sensor-val" id="sX">0.0</div>
+        <div class="sensor-bar"><div class="sensor-fill" id="bX"></div></div>
+      </div>
+      <div class="sensor-box">
+        <div class="sensor-label">Y-Axis</div>
+        <div class="sensor-val" id="sY">0.0</div>
+        <div class="sensor-bar"><div class="sensor-fill" id="bY"></div></div>
+      </div>
+      <div class="sensor-box">
+        <div class="sensor-label">Force</div>
+        <div class="sensor-val" id="sF">0.0</div>
+        <div class="sensor-bar"><div class="sensor-fill" id="bF"></div></div>
+      </div>
+    </div>
+
+    <!-- SENSITIVITY -->
+    <div style="font-size:11px;color:var(--text3);margin-bottom:8px;letter-spacing:0.5px">SENSITIVITY</div>
+    <div class="sensitivity-row">
+      <div class="sens-btn" onclick="setSens('low',this)">Low</div>
+      <div class="sens-btn on" onclick="setSens('medium',this)">Medium</div>
+      <div class="sens-btn" onclick="setSens('high',this)">High</div>
+    </div>
+
+    <button class="det-toggle" id="detBtn" onclick="toggleDetection()" style="margin-top:14px">
+      🔍 &nbsp;Enable Detection
+    </button>
+  </div>
+
+  <!-- HOW IT WORKS -->
   <div class="card">
-    <div class="card-label">National Emergency Numbers</div>
-    <div class="emergency-grid">
+    <div class="card-label">Kya Detect Hoga</div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:36px;height:36px;background:rgba(255,136,0,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">📱</div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--text)">Phone Girna (Fall)</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px">Sudden downward force detect hogi</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:36px;height:36px;background:rgba(255,45,45,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🤚</div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--text)">Phone Chinne Ki Koshish (Snatch)</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px">Sudden horizontal jerk detect hoga</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="width:36px;height:36px;background:rgba(153,68,255,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">⚡</div>
+        <div>
+          <div style="font-size:13px;font-weight:500;color:var(--text)">Violent Struggle</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px">Irregular violent motion detect hogi</div>
+        </div>
+      </div>
+    </div>
 
-      <a class="em-card police" href="tel:100" onclick="toast('Calling Police...','blue')">
-        <div class="em-call-badge">TAP TO CALL</div>
-        <div class="em-icon">🚔</div>
-        <div class="em-label">Police</div>
-        <div class="em-number police">100</div>
-        <div class="em-sublabel">Emergency Response</div>
-      </a>
-
-      <a class="em-card fire" href="tel:101" onclick="toast('Calling Fire Service...','red')">
-        <div class="em-call-badge">TAP TO CALL</div>
-        <div class="em-icon">🚒</div>
-        <div class="em-label">Fire Service</div>
-        <div class="em-number fire">101</div>
-        <div class="em-sublabel">Fire Emergency</div>
-      </a>
-
-      <a class="em-card amb" href="tel:102" onclick="toast('Calling Ambulance...','green')">
-        <div class="em-call-badge">TAP TO CALL</div>
-        <div class="em-icon">🚑</div>
-        <div class="em-label">Ambulance</div>
-        <div class="em-number amb">102</div>
-        <div class="em-sublabel">Medical Emergency</div>
-      </a>
-
-      <a class="em-card women" href="tel:1091" onclick="toast('Calling Women Helpline...','blue')">
-        <div class="em-call-badge">TAP TO CALL</div>
-        <div class="em-icon">👩</div>
-        <div class="em-label">Women Helpline</div>
-        <div class="em-number women">1091</div>
-        <div class="em-sublabel">Women in Distress</div>
-      </a>
-
-      <a class="em-card child" href="tel:1098" onclick="toast('Calling Childline...','blue')">
-        <div class="em-call-badge">TAP TO CALL</div>
-        <div class="em-icon">👧</div>
-        <div class="em-label">Childline</div>
-        <div class="em-number child">1098</div>
-        <div class="em-sublabel">Child Protection</div>
-      </a>
-
-      <a class="em-card disaster" href="tel:108" onclick="toast('Calling Disaster Helpline...','blue')">
-        <div class="em-call-badge">TAP TO CALL</div>
-        <div class="em-icon">🆘</div>
-        <div class="em-label">Disaster Help</div>
-        <div class="em-number disaster">108</div>
-        <div class="em-sublabel">NDRF Helpline</div>
-      </a>
-
+    <div style="background:rgba(255,170,0,0.05);border:0.5px solid rgba(255,170,0,0.15);border-radius:12px;padding:12px;margin-top:14px">
+      <div style="font-size:11px;color:#ffaa22;line-height:1.7">
+        ⚠️ Detection hone par <strong style="color:var(--text2)">10 second</strong> ka countdown aayega.<br>
+        Agar "I'm Safe" press nahi kiya — <strong style="color:var(--red)">Auto SOS</strong> chala jayega!
+      </div>
     </div>
   </div>
 
-  <!-- HARYANA LOCAL NUMBERS -->
+  <!-- DETECTION LOG -->
   <div class="card">
-    <div class="card-label">Haryana State Numbers</div>
-    <div class="emergency-grid">
-
-      <a class="em-card police" href="tel:1800-180-0060" onclick="toast('Calling Haryana Police...','blue')">
-        <div class="em-call-badge">TAP TO CALL</div>
-        <div class="em-icon">👮</div>
-        <div class="em-label">Haryana Police</div>
-        <div class="em-number police" style="font-size:13px">1800-180-0060</div>
-        <div class="em-sublabel">Toll Free 24x7</div>
-      </a>
-
-      <a class="em-card women" href="tel:1091" onclick="toast('Calling Durga Shakti...','blue')">
-        <div class="em-call-badge">TAP TO CALL</div>
-        <div class="em-icon">💪</div>
-        <div class="em-label">Durga Shakti</div>
-        <div class="em-number women">1091</div>
-        <div class="em-sublabel">Haryana Women</div>
-      </a>
-
-      <a class="em-card amb" href="tel:112" onclick="toast('Calling 112 Emergency...','green')">
-        <div class="em-call-badge">TAP TO CALL</div>
-        <div class="em-icon">🆘</div>
-        <div class="em-label">Emergency</div>
-        <div class="em-number amb">112</div>
-        <div class="em-sublabel">All-in-one Helpline</div>
-      </a>
-
-      <a class="em-card fire" href="tel:01664-244555" onclick="toast('Calling Narnaul Fire...','red')">
-        <div class="em-call-badge">TAP TO CALL</div>
-        <div class="em-icon">🔥</div>
-        <div class="em-label">Narnaul Fire</div>
-        <div class="em-number fire" style="font-size:12px">01664-244555</div>
-        <div class="em-sublabel">Mahendragarh Dist</div>
-      </a>
-
+    <div class="card-label">Detection Log</div>
+    <div id="detLog">
+      <p class="empty-msg">Koi detection nahi hua abhi tak.</p>
     </div>
-  </div>
-
-  <!-- NEARBY SECTION -->
-  <div class="card">
-    <div class="card-label">Nearby Help — Based on Your Location</div>
-    <div id="nearbyList">
-      <p class="empty-msg">📍 Location access do — nearby stations dikhenge</p>
-    </div>
-  </div>
-
-  <!-- IMPORTANT NOTE -->
-  <div class="card" style="background:rgba(255,170,0,0.04);border-color:rgba(255,170,0,0.15)">
-    <div style="font-size:10px;color:#ffaa22;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">Important Note</div>
-    <p style="font-size:12px;color:var(--text3);line-height:1.8">
-      • <strong style="color:var(--text2)">112</strong> — Sabse fast response, sabse important<br>
-      • <strong style="color:var(--text2)">1091</strong> — Women specifically ke liye<br>
-      • Yeh numbers 24x7 free hain, kisi bhi phone se<br>
-      • Network nahi ho toh bhi <strong style="color:var(--text2)">112</strong> kaam karta hai
-    </p>
   </div>
 
 </div>
 
-<!-- ======= CHECK-IN ======= -->
+<!-- EMERGENCY TAB -->
+<div class="page" id="tab-emergency">
+  <div class="card">
+    <div class="card-label">National Emergency Numbers</div>
+    <div class="emergency-grid">
+      <a class="em-card police" href="tel:100"><div class="em-call-badge">CALL</div><div class="em-icon">🚔</div><div class="em-label">Police</div><div class="em-number police">100</div></a>
+      <a class="em-card fire" href="tel:101"><div class="em-call-badge">CALL</div><div class="em-icon">🚒</div><div class="em-label">Fire</div><div class="em-number fire">101</div></a>
+      <a class="em-card amb" href="tel:102"><div class="em-call-badge">CALL</div><div class="em-icon">🚑</div><div class="em-label">Ambulance</div><div class="em-number amb">102</div></a>
+      <a class="em-card amb" href="tel:112"><div class="em-call-badge">CALL</div><div class="em-icon">🆘</div><div class="em-label">Emergency</div><div class="em-number amb">112</div></a>
+      <a class="em-card women" href="tel:1091"><div class="em-call-badge">CALL</div><div class="em-icon">👩</div><div class="em-label">Women Helpline</div><div class="em-number women">1091</div></a>
+      <a class="em-card women" href="tel:1098"><div class="em-call-badge">CALL</div><div class="em-icon">👧</div><div class="em-label">Childline</div><div class="em-number women" style="color:#ffaa22">1098</div></a>
+    </div>
+  </div>
+  <div class="card" style="background:rgba(68,153,255,0.04);border-color:rgba(68,153,255,0.15)">
+    <div class="card-label">Haryana Numbers</div>
+    <div class="emergency-grid">
+      <a class="em-card police" href="tel:1800-180-0060"><div class="em-call-badge">CALL</div><div class="em-icon">👮</div><div class="em-label">Haryana Police</div><div class="em-number police" style="font-size:12px">1800-180-0060</div></a>
+      <a class="em-card women" href="tel:1091"><div class="em-call-badge">CALL</div><div class="em-icon">💪</div><div class="em-label">Durga Shakti</div><div class="em-number women">1091</div></a>
+    </div>
+  </div>
+</div>
+
+<!-- CHECK-IN TAB -->
 <div class="page" id="tab-checkin">
   <div class="card">
     <div class="card-label">Safety Check-in</div>
@@ -532,17 +572,17 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
   </div>
   <div class="card" id="safeCard" style="display:none">
     <button class="safe-btn" onclick="iAmSafe()">✓ &nbsp;I AM SAFE</button>
-    <p style="font-size:11px;color:var(--text3);text-align:center;margin-top:12px;line-height:1.6">Timer khatam hone se pehle press karo</p>
+    <p style="font-size:11px;color:var(--text3);text-align:center;margin-top:12px">Timer khatam hone se pehle press karo</p>
   </div>
 </div>
 
-<!-- ======= GUARDIAN ======= -->
+<!-- GUARDIAN TAB -->
 <div class="page" id="tab-guardian">
   <div class="card">
     <div class="g-header">
       <div>
         <div style="font-size:15px;font-weight:500;margin-bottom:4px">Guardian Mode</div>
-        <div style="font-size:12px;color:var(--text3)">Family real-time location dekh sakti hai</div>
+        <div style="font-size:12px;color:var(--text3)">Family real-time track kar sakti hai</div>
       </div>
       <div class="g-badge off" id="gBadge">OFF</div>
     </div>
@@ -562,7 +602,7 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
   </div>
 </div>
 
-<!-- ======= CONTACTS ======= -->
+<!-- CONTACTS TAB -->
 <div class="page" id="tab-contacts">
   <div class="card">
     <div class="card-label">Add Trusted Contact</div>
@@ -586,11 +626,11 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
   </div>
 </div>
 
-<!-- ======= HISTORY ======= -->
+<!-- HISTORY TAB -->
 <div class="page" id="tab-history">
   <div class="card">
     <div class="card-label">Alert History</div>
-    <div id="histLog"><p class="empty-msg">No SOS alerts yet.</p></div>
+    <div id="histLog"><p class="empty-msg">No alerts yet.</p></div>
   </div>
 </div>
 
@@ -603,13 +643,26 @@ body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse
     <div class="fc-type">Mobile</div>
   </div>
   <div class="fc-actions">
-    <button class="fc-action-btn fc-decline" onclick="endFakeCall()">
-      <div class="fc-icon">✕</div><span>Decline</span>
-    </button>
-    <button class="fc-action-btn fc-accept" onclick="acceptFakeCall()">
-      <div class="fc-icon">✆</div><span>Accept</span>
-    </button>
+    <button class="fc-action-btn fc-decline" onclick="endFakeCall()"><div class="fc-icon">✕</div><span>Decline</span></button>
+    <button class="fc-action-btn fc-accept" onclick="acceptFakeCall()"><div class="fc-icon">✆</div><span>Accept</span></button>
   </div>
+</div>
+
+<!-- DETECTION COUNTDOWN OVERLAY -->
+<div class="countdown-overlay" id="countdownOverlay">
+  <div class="countdown-type" id="cdType">FALL DETECTED</div>
+  <div class="countdown-icon" id="cdIcon">📱</div>
+  <div class="countdown-num" id="cdNum">10</div>
+  <div class="countdown-bar">
+    <div class="countdown-progress" id="cdProgress" style="width:100%"></div>
+  </div>
+  <div class="countdown-msg">
+    Kya sab theek hai?<br>
+    <span style="color:var(--red)">Auto SOS</span> seconds mein chala jayega!
+  </div>
+  <button class="countdown-cancel" onclick="cancelDetectionSOS()">
+    ✓ &nbsp;Main Safe Hun — Cancel SOS
+  </button>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -630,122 +683,80 @@ const fbConfig = {
 const fbApp = initializeApp(fbConfig);
 const db = getFirestore(fbApp);
 
-let lat=null,lng=null,acc=null;
-let ciActive=false,ciSecs=0,ciMins=5,ciTimer=null;
-let guardActive=false,guardId=null,guardTimer=null;
+/* ---- STATE ---- */
+let lat=null, lng=null, acc=null;
+let ciActive=false, ciSecs=0, ciMins=5, ciTimer=null;
+let guardActive=false, guardId=null, guardTimer=null;
 let fcTimer=null;
 
-/* ===== TICKER ===== */
-const EMERGENCY_NUMBERS = [
-  {type:'police', label:'Police',        num:'100',             icon:'🚔'},
-  {type:'fire',   label:'Fire Service',  num:'101',             icon:'🚒'},
-  {type:'amb',    label:'Ambulance',     num:'102',             icon:'🚑'},
-  {type:'amb',    label:'Emergency',     num:'112',             icon:'🆘'},
-  {type:'women',  label:'Women Helpline',num:'1091',            icon:'👩'},
-  {type:'child',  label:'Childline',     num:'1098',            icon:'👧'},
-  {type:'women',  label:'Durga Shakti',  num:'1091',            icon:'💪'},
-  {type:'fire',   label:'Narnaul Fire',  num:'01664-244555',    icon:'🔥'},
-  {type:'police', label:'Haryana Police',num:'1800-180-0060',   icon:'👮'},
-  {type:'disaster',label:'Disaster',     num:'108',             icon:'🆘'},
-];
+/* ---- DETECTION STATE ---- */
+let detectionActive = false;
+let sensitivity = 'medium';
+let countdownActive = false;
+let countdownTimer = null;
+let countdownSecs = 10;
+let lastMotionTime = 0;
+let detectionLog = [];
 
+// Sensitivity thresholds
+const THRESHOLDS = {
+  low:    { fall: 40, snatch: 35, struggle: 45 },
+  medium: { fall: 28, snatch: 25, struggle: 32 },
+  high:   { fall: 18, snatch: 16, struggle: 20 }
+};
+
+/* ---- TICKER ---- */
+const NUMS = [
+  {type:'police',label:'Police',num:'100',icon:'🚔'},
+  {type:'fire',label:'Fire',num:'101',icon:'🚒'},
+  {type:'amb',label:'Ambulance',num:'102',icon:'🚑'},
+  {type:'amb',label:'Emergency',num:'112',icon:'🆘'},
+  {type:'women',label:'Women Help',num:'1091',icon:'👩'},
+  {type:'women',label:'Childline',num:'1098',icon:'👧'},
+  {type:'police',label:'Haryana Police',num:'1800-180-0060',icon:'👮'},
+];
 function buildTicker(){
-  const track = document.getElementById('tickerTrack');
-  // Duplicate for seamless loop
-  let html = '';
+  const t = document.getElementById('tickerTrack');
+  let h='';
   for(let r=0;r<2;r++){
-    EMERGENCY_NUMBERS.forEach(n=>{
-      html += `<a class="ticker-item" href="tel:${n.num}">
+    NUMS.forEach(n=>{
+      h+=`<a class="ticker-item" href="tel:${n.num}">
         <div class="ticker-dot" style="background:${typeColor(n.type)}"></div>
         <span class="ticker-name">${n.icon} ${n.label}</span>
         <span class="ticker-num ${n.type}">${n.num}</span>
-      </a>
-      <span class="ticker-sep">|</span>`;
+      </a><span class="ticker-sep">|</span>`;
     });
   }
-  track.innerHTML = html;
+  t.innerHTML=h;
 }
-
 function typeColor(t){
-  const m={police:'#4499ff',fire:'#ff6622',amb:'#44dd88',women:'#ff44aa',child:'#ffaa22',disaster:'#9944ff'};
-  return m[t]||'#aaa';
+  return {police:'#4499ff',fire:'#ff6622',amb:'#44dd88',women:'#ff44aa'}[t]||'#aaa';
 }
 
-/* ===== NEARBY (Location-based) ===== */
-function updateNearby(lat, lng){
-  // Based on coordinates, show relevant local stations
-  // Haryana region detection
-  const el = document.getElementById('nearbyList');
-
-  // Nagina/Mahendragarh area (approx coords: 28.0-28.5 lat, 76.5-77.2 lng)
-  const isHaryana = lat > 27.5 && lat < 30.5 && lng > 74.5 && lng < 77.5;
-  const isMahendragarh = lat > 27.8 && lat < 28.3 && lng > 76.5 && lng < 77.2;
-
-  let stations = [];
-
-  if(isMahendragarh){
-    stations = [
-      {type:'police', name:'Narnaul Police Station', num:'01282-252100', dist:'~3 km'},
-      {type:'fire',   name:'Narnaul Fire Station',   num:'01664-244555', dist:'~4 km'},
-      {type:'amb',    name:'General Hospital Narnaul',num:'01282-252600', dist:'~5 km'},
-      {type:'women',  name:'Mahendragarh Women Cell', num:'01282-254400', dist:'~3 km'},
-    ];
-  } else if(isHaryana){
-    stations = [
-      {type:'police', name:'Haryana Police Control',  num:'100',          dist:'State'},
-      {type:'fire',   name:'Haryana Fire Service',    num:'101',          dist:'State'},
-      {type:'amb',    name:'108 Ambulance Service',   num:'108',          dist:'State'},
-      {type:'women',  name:'Durga Shakti Helpline',   num:'1091',         dist:'State'},
-    ];
-  } else {
-    stations = [
-      {type:'police', name:'National Emergency',      num:'112',          dist:'National'},
-      {type:'women',  name:'Women Helpline',           num:'1091',         dist:'National'},
-      {type:'amb',    name:'Ambulance',                num:'102',          dist:'National'},
-      {type:'fire',   name:'Fire Service',             num:'101',          dist:'National'},
-    ];
-  }
-
-  const colors = {police:'#4499ff',fire:'#ff6622',amb:'#44dd88',women:'#ff44aa'};
-  el.innerHTML = stations.map(s=>`
-    <div class="nearby-card" style="border-color:${colors[s.type]||'#4499ff'}22;background:${colors[s.type]||'#4499ff'}08;margin-bottom:8px">
-      <div class="nearby-info">
-        <div class="nearby-type">${s.type.toUpperCase()}</div>
-        <div class="nearby-name">${s.name}</div>
-        <div class="nearby-dist">${s.dist}</div>
-      </div>
-      <a class="nearby-call" href="tel:${s.num}" style="color:${colors[s.type]||'#4499ff'};border-color:${colors[s.type]||'#4499ff'}44;background:${colors[s.type]||'#4499ff'}10"
-         onclick="toast('Calling ${s.name}...','blue')">${s.num}</a>
-    </div>
-  `).join('');
-}
-
-/* ===== LOCATION ===== */
+/* ---- LOCATION ---- */
 if(navigator.geolocation){
   navigator.geolocation.watchPosition(pos=>{
-    lat = pos.coords.latitude.toFixed(6);
-    lng = pos.coords.longitude.toFixed(6);
-    acc = Math.round(pos.coords.accuracy);
-    document.getElementById('latVal').textContent = lat;
-    document.getElementById('lngVal').textContent = lng;
-    document.getElementById('accVal').textContent = '±'+acc+'m';
-    const lb = document.getElementById('locBar');
-    lb.textContent = '✓  Location active — Ready to send SOS';
-    lb.className = 'loc-bar ready';
-    const ml = document.getElementById('mapsLink');
-    ml.href = `https://maps.google.com/?q=${lat},${lng}`;
-    ml.style.display = 'flex';
-    updateNearby(parseFloat(lat), parseFloat(lng));
+    lat=pos.coords.latitude.toFixed(6);
+    lng=pos.coords.longitude.toFixed(6);
+    acc=Math.round(pos.coords.accuracy);
+    document.getElementById('latVal').textContent=lat;
+    document.getElementById('lngVal').textContent=lng;
+    document.getElementById('accVal').textContent='±'+acc+'m';
+    const lb=document.getElementById('locBar');
+    lb.textContent='✓  Location active — Ready to send SOS';
+    lb.className='loc-bar ready';
+    const ml=document.getElementById('mapsLink');
+    ml.href=`https://maps.google.com/?q=${lat},${lng}`;
+    ml.style.display='flex';
     if(guardActive) broadcastNow();
-  }, ()=>{
-    const lb = document.getElementById('locBar');
-    lb.textContent = '✕  Location access denied';
-    lb.className = 'loc-bar err';
-  }, {enableHighAccuracy:true});
+  },()=>{
+    document.getElementById('locBar').textContent='✕  Location access denied';
+    document.getElementById('locBar').className='loc-bar err';
+  },{enableHighAccuracy:true});
 }
 
-/* ===== TABS ===== */
-window.showTab = function(t, el){
+/* ---- TABS ---- */
+window.showTab = function(t,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
   document.getElementById('tab-'+t).classList.add('active');
@@ -753,16 +764,206 @@ window.showTab = function(t, el){
   if(t==='history') loadHistory();
 }
 
-/* ===== CONTACTS ===== */
+/* ---- SENSITIVITY ---- */
+window.setSens = function(s, el){
+  sensitivity = s;
+  document.querySelectorAll('.sens-btn').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  toast('Sensitivity: '+s,'orange');
+}
+
+/* ---- DETECTION ENGINE ---- */
+window.toggleDetection = function(){
+  if(!detectionActive){
+    // Request permission on iOS
+    if(typeof DeviceMotionEvent !== 'undefined' &&
+       typeof DeviceMotionEvent.requestPermission === 'function'){
+      DeviceMotionEvent.requestPermission().then(state=>{
+        if(state==='granted') startDetection();
+        else toast('Motion permission denied!','red');
+      }).catch(()=>toast('Permission error!','red'));
+    } else {
+      startDetection();
+    }
+  } else {
+    stopDetection();
+  }
+}
+
+function startDetection(){
+  detectionActive = true;
+  document.getElementById('detBadge').textContent='ON';
+  document.getElementById('detBadge').className='det-badge on';
+  document.getElementById('detBtn').innerHTML='⏹ &nbsp;Disable Detection';
+  document.getElementById('detBtn').classList.add('on');
+  window.addEventListener('devicemotion', handleMotion);
+  toast('Detection ON! Motion monitoring shuru...','orange');
+}
+
+function stopDetection(){
+  detectionActive = false;
+  window.removeEventListener('devicemotion', handleMotion);
+  document.getElementById('detBadge').textContent='OFF';
+  document.getElementById('detBadge').className='det-badge off';
+  document.getElementById('detBtn').innerHTML='🔍 &nbsp;Enable Detection';
+  document.getElementById('detBtn').classList.remove('on');
+  // Reset sensor display
+  updateSensorUI(0,0,0);
+  toast('Detection OFF');
+}
+
+function handleMotion(event){
+  const acc = event.accelerationIncludingGravity;
+  if(!acc) return;
+
+  const x = Math.abs(acc.x || 0);
+  const y = Math.abs(acc.y || 0);
+  const z = Math.abs(acc.z || 0);
+  const force = Math.sqrt(x*x + y*y + z*z);
+
+  // Update UI
+  updateSensorUI(x, y, force);
+
+  // Throttle detection — max once per 3 seconds
+  const now = Date.now();
+  if(now - lastMotionTime < 3000) return;
+  if(countdownActive) return;
+
+  const thresh = THRESHOLDS[sensitivity];
+
+  // FALL detection — sudden downward force
+  if(force > thresh.fall && z > 20){
+    lastMotionTime = now;
+    triggerDetectionAlert('FALL DETECTED', '📱', force.toFixed(1), 'fall');
+    return;
+  }
+
+  // SNATCH detection — sudden horizontal jerk
+  if(force > thresh.snatch && (x > 18 || y > 18) && z < 15){
+    lastMotionTime = now;
+    triggerDetectionAlert('SNATCH ATTEMPT', '🤚', force.toFixed(1), 'snatch');
+    return;
+  }
+
+  // STRUGGLE detection — violent irregular motion
+  if(force > thresh.struggle){
+    lastMotionTime = now;
+    triggerDetectionAlert('VIOLENT MOTION', '⚡', force.toFixed(1), 'struggle');
+  }
+}
+
+function updateSensorUI(x, y, force){
+  const maxF = 50;
+  const xR = Math.min((x/maxF)*100, 100);
+  const yR = Math.min((y/maxF)*100, 100);
+  const fR = Math.min((force/maxF)*100, 100);
+
+  document.getElementById('sX').textContent = x.toFixed(1);
+  document.getElementById('sY').textContent = y.toFixed(1);
+  document.getElementById('sF').textContent = force.toFixed(1);
+
+  const thresh = THRESHOLDS[sensitivity];
+  const setBar = (valId, barId, val, ref)=>{
+    const el = document.getElementById(valId);
+    const bar = document.getElementById(barId);
+    const pct = Math.min((val/ref)*100, 100);
+    bar.style.width = pct+'%';
+    if(pct > 80){ el.className='sensor-val danger'; bar.className='sensor-fill danger'; }
+    else if(pct > 50){ el.className='sensor-val warn'; bar.className='sensor-fill warn'; }
+    else { el.className='sensor-val'; bar.className='sensor-fill'; }
+  };
+  setBar('sX','bX',x,30);
+  setBar('sY','bY',y,30);
+  setBar('sF','bF',force,thresh.fall);
+}
+
+function triggerDetectionAlert(type, icon, force, logType){
+  if(countdownActive) return;
+  countdownActive = true;
+  countdownSecs = 10;
+
+  // Log it
+  addDetectionLog(type, force, logType);
+
+  // Vibrate
+  if(navigator.vibrate) navigator.vibrate([300,100,300,100,300]);
+
+  // Show badge
+  document.getElementById('detBadge').textContent='ALERT';
+  document.getElementById('detBadge').className='det-badge alert';
+
+  // Show countdown overlay
+  const overlay = document.getElementById('countdownOverlay');
+  document.getElementById('cdType').textContent = type;
+  document.getElementById('cdIcon').textContent = icon;
+  document.getElementById('cdNum').textContent = countdownSecs;
+  overlay.classList.add('show');
+
+  // Start countdown
+  countdownTimer = setInterval(()=>{
+    countdownSecs--;
+    document.getElementById('cdNum').textContent = countdownSecs;
+    document.getElementById('cdProgress').style.width = (countdownSecs/10*100)+'%';
+    if(navigator.vibrate) navigator.vibrate(200);
+    if(countdownSecs <= 0){
+      clearInterval(countdownTimer);
+      overlay.classList.remove('show');
+      countdownActive = false;
+      document.getElementById('detBadge').textContent='ON';
+      document.getElementById('detBadge').className='det-badge on';
+      triggerSOS();
+      toast('Auto SOS triggered!','red');
+    }
+  }, 1000);
+}
+
+window.cancelDetectionSOS = function(){
+  clearInterval(countdownTimer);
+  document.getElementById('countdownOverlay').classList.remove('show');
+  countdownActive = false;
+  countdownSecs = 10;
+  document.getElementById('cdProgress').style.width='100%';
+  document.getElementById('detBadge').textContent='ON';
+  document.getElementById('detBadge').className='det-badge on';
+  toast('SOS cancelled — Safe hun!','green');
+}
+
+function addDetectionLog(type, force, logType){
+  const now = new Date();
+  const item = {type, force, logType, time: now.toLocaleTimeString('en-IN'), date: now.toLocaleDateString('en-IN')};
+  detectionLog.unshift(item);
+  if(detectionLog.length > 20) detectionLog.pop();
+  renderDetectionLog();
+}
+
+function renderDetectionLog(){
+  const el = document.getElementById('detLog');
+  if(!detectionLog.length){
+    el.innerHTML='<p class="empty-msg">Koi detection nahi hua abhi tak.</p>';
+    return;
+  }
+  const icons = {fall:'📱',snatch:'🤚',struggle:'⚡'};
+  el.innerHTML = detectionLog.map(d=>`
+    <div class="det-log-item">
+      <div class="det-log-icon ${d.logType}">${icons[d.logType]||'⚡'}</div>
+      <div>
+        <div class="det-log-type">${d.type}</div>
+        <div class="det-log-time">${d.date} • ${d.time}</div>
+      </div>
+      <div class="det-log-force">${d.force}G</div>
+    </div>`).join('');
+}
+
+/* ---- CONTACTS ---- */
 function gc(){ return JSON.parse(localStorage.getItem('sg_c')||'[]') }
-function sc(c){ localStorage.setItem('sg_c', JSON.stringify(c)) }
+function sc(c){ localStorage.setItem('sg_c',JSON.stringify(c)) }
 
 window.addContact = function(){
-  const name = document.getElementById('newName').value.trim();
-  const num  = document.getElementById('newNum').value.trim();
+  const name=document.getElementById('newName').value.trim();
+  const num=document.getElementById('newNum').value.trim();
   if(!name||!num){ toast('Dono fields bharo!','red'); return }
   if(num.length<10){ toast('Sahi number daalo!','red'); return }
-  const cs = gc();
+  const cs=gc();
   if(cs.length>=5){ toast('Max 5 contacts!','red'); return }
   if(cs.find(c=>c.number===num)){ toast('Already added!','red'); return }
   cs.push({name,number:num,id:Date.now()});
@@ -779,40 +980,29 @@ window.removeContact = function(id){
 }
 
 function renderContacts(){
-  const cs = gc();
-  document.getElementById('cCount').textContent = cs.length;
-  const el = document.getElementById('cList');
-  if(!cs.length){
-    el.innerHTML='<p class="empty-msg">No contacts added yet.</p>';
-    updateSosHint(); return;
-  }
-  el.innerHTML = cs.map(c=>`
+  const cs=gc();
+  document.getElementById('cCount').textContent=cs.length;
+  const el=document.getElementById('cList');
+  if(!cs.length){ el.innerHTML='<p class="empty-msg">No contacts added yet.</p>'; updateSosHint(); return }
+  el.innerHTML=cs.map(c=>`
     <div class="c-item">
       <div class="c-avatar">${c.name[0].toUpperCase()}</div>
-      <div>
-        <div class="c-name">${c.name}</div>
-        <div class="c-num">+${c.number}</div>
-      </div>
+      <div><div class="c-name">${c.name}</div><div class="c-num">+${c.number}</div></div>
       <button class="c-del" onclick="removeContact(${c.id})">×</button>
     </div>`).join('');
   updateSosHint();
 }
 
 function updateSosHint(){
-  const cs = gc();
-  const el = document.getElementById('sosHint');
-  el.innerHTML = cs.length
+  const cs=gc();
+  document.getElementById('sosHint').innerHTML = cs.length
     ? `<strong>Alert: ${cs.map(c=>c.name).join(', ')}</strong><br>WhatsApp + Google Maps`
     : '<strong style="color:var(--red)">Add contacts first</strong>';
 }
 
-/* ===== CHECK-IN ===== */
-window.pickInt = function(m, el){
-  ciMins = m;
-  document.querySelectorAll('.int-opt').forEach(b=>b.classList.remove('on'));
-  el.classList.add('on');
-}
-window.ciAction = function(){ ciActive ? stopCI() : startCI() }
+/* ---- CHECK-IN ---- */
+window.pickInt=function(m,el){ ciMins=m; document.querySelectorAll('.int-opt').forEach(b=>b.classList.remove('on')); el.classList.add('on'); }
+window.ciAction=function(){ ciActive?stopCI():startCI() }
 
 function startCI(){
   if(!lat){ toast('Location ready nahi!','red'); return }
@@ -823,38 +1013,33 @@ function startCI(){
   document.getElementById('safeCard').style.display='block';
   runCI(); toast('Check-in started!','green');
   const cs=gc(), ml=`https://maps.google.com/?q=${lat},${lng}`;
-  const msg=`🛡 SafeGuard Check-in Started\n\nHar ${ciMins} min mein confirm karengi.\nMiss hone par auto SOS aayega.\n\nCurrent location:\n${ml}`;
+  const msg=`🛡 SafeGuard Check-in Started\nHar ${ciMins} min mein confirm karengi.\nMiss hone par auto SOS.\nLocation: ${ml}`;
   if(cs.length) window.open(`https://wa.me/${cs[0].number}?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
 function runCI(){
   clearInterval(ciTimer);
-  ciTimer = setInterval(()=>{
+  ciTimer=setInterval(()=>{
     ciSecs--; updateTimerUI();
-    if(ciSecs<=0){ clearInterval(ciTimer); toast('Check-in missed! Auto SOS!','red'); triggerSOS(); stopCI(); }
+    if(ciSecs<=0){ clearInterval(ciTimer); toast('Missed! Auto SOS!','red'); triggerSOS(); stopCI(); }
   },1000);
 }
 
 function updateTimerUI(){
-  const m=Math.floor(ciSecs/60), s=ciSecs%60;
-  document.getElementById('tNum').textContent = m+':'+(s<10?'0':'')+s;
-  document.getElementById('tSub').textContent = 'REMAINING';
-  const pct = ciSecs/(ciMins*60);
-  const circ = 2*Math.PI*58;
-  document.getElementById('tProg').style.strokeDasharray = circ;
-  document.getElementById('tProg').style.strokeDashoffset = circ-circ*pct;
-  document.getElementById('tProg').className = 't-prog'+(pct<0.2?' danger':pct<0.5?' warn':'');
+  const m=Math.floor(ciSecs/60),s=ciSecs%60;
+  document.getElementById('tNum').textContent=m+':'+(s<10?'0':'')+s;
+  document.getElementById('tSub').textContent='REMAINING';
+  const pct=ciSecs/(ciMins*60);
+  const c=2*Math.PI*58;
+  document.getElementById('tProg').style.strokeDasharray=c;
+  document.getElementById('tProg').style.strokeDashoffset=c-c*pct;
+  document.getElementById('tProg').className='t-prog'+(pct<0.2?' danger':pct<0.5?' warn':'');
 }
 
-window.iAmSafe = function(){
+window.iAmSafe=function(){
   if(!ciActive) return;
   ciSecs=ciMins*60; runCI(); updateTimerUI();
-  toast('Safe confirmed! Timer reset ✓','green');
-  const cs=gc();
-  if(cs.length&&lat){
-    const msg=`✅ SafeGuard Check-in\n\nMain safe hun!\nTime: ${new Date().toLocaleString('en-IN')}\nLocation: https://maps.google.com/?q=${lat},${lng}`;
-    window.open(`https://wa.me/${cs[0].number}?text=${encodeURIComponent(msg)}`,'_blank');
-  }
+  toast('Safe confirmed!','green');
 }
 
 function stopCI(){
@@ -868,21 +1053,21 @@ function stopCI(){
   document.getElementById('safeCard').style.display='none';
 }
 
-/* ===== GUARDIAN ===== */
-window.toggleGuardian = function(){
-  guardActive = !guardActive;
+/* ---- GUARDIAN ---- */
+window.toggleGuardian=function(){
+  guardActive=!guardActive;
   if(guardActive){
-    guardId = 'g_'+Date.now();
+    guardId='g_'+Date.now();
     document.getElementById('gBadge').textContent='ON';
     document.getElementById('gBadge').className='g-badge on';
     document.getElementById('gBtn').innerHTML='⏹ &nbsp;Disable Guardian Mode';
     document.getElementById('gLinkSection').style.display='block';
-    const link = window.location.origin+window.location.pathname+'?view='+guardId;
-    document.getElementById('gLink').textContent = link;
+    const link=window.location.origin+window.location.pathname+'?view='+guardId;
+    document.getElementById('gLink').textContent=link;
     document.getElementById('bcastTxt').textContent='🟢 Broadcasting';
     document.getElementById('bcastTxt').style.color='var(--green)';
     broadcastNow();
-    guardTimer = setInterval(broadcastNow, 30000);
+    guardTimer=setInterval(broadcastNow,30000);
     toast('Guardian mode ON!','green');
   } else {
     guardActive=false; clearInterval(guardTimer);
@@ -904,68 +1089,67 @@ async function broadcastNow(){
       timestamp:new Date().toISOString(),
       mapsLink:`https://maps.google.com/?q=${lat},${lng}`,active:true
     });
-    document.getElementById('lastUpdTxt').textContent = new Date().toLocaleTimeString('en-IN');
+    document.getElementById('lastUpdTxt').textContent=new Date().toLocaleTimeString('en-IN');
     document.getElementById('lastUpdTxt').style.color='var(--green)';
-  } catch(e){ console.error(e) }
+  }catch(e){ console.error(e) }
 }
 
-window.copyGLink = function(){
-  const l = document.getElementById('gLink').textContent;
-  navigator.clipboard.writeText(l).then(()=>toast('Link copied!','blue')).catch(()=>toast('Copy failed'));
+window.copyGLink=function(){
+  navigator.clipboard.writeText(document.getElementById('gLink').textContent)
+    .then(()=>toast('Link copied!','blue')).catch(()=>toast('Copy failed'));
 }
-window.shareGWA = function(){
-  const l = document.getElementById('gLink').textContent;
-  const cs = gc();
-  const msg=`👁 SafeGuard Guardian Mode\n\nMeri real-time location:\n${l}\n\nHar 30 sec mein update hogi.`;
+window.shareGWA=function(){
+  const l=document.getElementById('gLink').textContent;
+  const cs=gc();
+  const msg=`👁 SafeGuard Guardian Mode\nReal-time location:\n${l}\nHar 30 sec update hogi.`;
   window.open(cs.length?`https://wa.me/${cs[0].number}?text=${encodeURIComponent(msg)}`:`https://wa.me/?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
-/* ===== FAKE CALL ===== */
-window.saveFcName = function(){
-  const n = document.getElementById('fcNameInp').value.trim();
+/* ---- FAKE CALL ---- */
+window.saveFcName=function(){
+  const n=document.getElementById('fcNameInp').value.trim();
   if(!n){ toast('Naam daalo!','red'); return }
-  localStorage.setItem('sg_fc',n);
-  toast('Caller name saved!','green');
+  localStorage.setItem('sg_fc',n); toast('Saved!','green');
 }
-window.startFakeCall = function(){
-  const n = localStorage.getItem('sg_fc')||'Ammi';
-  document.getElementById('fcName').textContent = n;
-  document.getElementById('fcInitial').textContent = n[0].toUpperCase();
+window.startFakeCall=function(){
+  const n=localStorage.getItem('sg_fc')||'Ammi';
+  document.getElementById('fcName').textContent=n;
+  document.getElementById('fcInitial').textContent=n[0].toUpperCase();
   document.getElementById('fcScreen').classList.add('show');
   if(navigator.vibrate) navigator.vibrate([600,300,600,300,600]);
-  fcTimer = setTimeout(endFakeCall, 30000);
+  fcTimer=setTimeout(endFakeCall,30000);
 }
-window.acceptFakeCall = function(){ clearTimeout(fcTimer); document.getElementById('fcScreen').classList.remove('show'); toast('Call accepted — stay safe!','blue'); }
-window.endFakeCall = function(){ clearTimeout(fcTimer); document.getElementById('fcScreen').classList.remove('show'); }
+window.acceptFakeCall=function(){ clearTimeout(fcTimer); document.getElementById('fcScreen').classList.remove('show'); toast('Call accepted!','blue'); }
+window.endFakeCall=function(){ clearTimeout(fcTimer); document.getElementById('fcScreen').classList.remove('show'); }
 
-/* ===== SOS ===== */
-window.triggerSOS = async function(){
+/* ---- SOS ---- */
+window.triggerSOS=async function(){
   if(!lat){ toast('Location ready nahi!','red'); return }
-  const cs = gc();
+  const cs=gc();
   if(!cs.length){ toast('Contacts add karo!','red'); return }
-  const btn = document.getElementById('sosBtn');
+  const btn=document.getElementById('sosBtn');
   btn.classList.add('firing');
   setTimeout(()=>btn.classList.remove('firing'),600);
-  const mapsLink = `https://maps.google.com/?q=${lat},${lng}`;
-  const time = new Date().toLocaleString('en-IN');
-  const msg = `🚨 *EMERGENCY SOS ALERT* 🚨\n\nMujhe madad chahiye! Turant aa jao!\n\n📍 *Meri location:*\n${mapsLink}\n\n🕐 Time: ${time}\n📌 Lat: ${lat}, Lng: ${lng}\n\n_SafeGuard Women's Safety App_`;
+  const ml=`https://maps.google.com/?q=${lat},${lng}`;
+  const time=new Date().toLocaleString('en-IN');
+  const msg=`🚨 *EMERGENCY SOS ALERT* 🚨\n\nMujhe madad chahiye!\n\n📍 Location:\n${ml}\n\n🕐 Time: ${time}\n\n_SafeGuard App_`;
   try{
     await addDoc(collection(db,'sos_alerts'),{
       timestamp:new Date().toISOString(),latitude:lat,longitude:lng,accuracy:acc,
-      googleMapsLink:mapsLink,contactsAlerted:cs.map(c=>c.name),status:'ACTIVE'
+      googleMapsLink:ml,contactsAlerted:cs.map(c=>c.name),status:'ACTIVE'
     });
-  } catch(e){ console.error(e) }
+  }catch(e){ console.error(e) }
   cs.forEach((c,i)=>setTimeout(()=>window.open(`https://wa.me/${c.number}?text=${encodeURIComponent(msg)}`,'_blank'),i*2000));
-  toast(`🚨 SOS sent to ${cs.length} contact${cs.length>1?'s':''}!`,'red');
+  toast(`🚨 SOS sent to ${cs.length} contacts!`,'red');
 }
 
-/* ===== HISTORY ===== */
+/* ---- HISTORY ---- */
 async function loadHistory(){
-  const el = document.getElementById('histLog');
+  const el=document.getElementById('histLog');
   el.innerHTML='<p class="empty-msg">Loading...</p>';
   try{
-    const snap = await getDocs(query(collection(db,'sos_alerts'),orderBy('timestamp','desc')));
-    if(snap.empty){ el.innerHTML='<p class="empty-msg">No SOS alerts yet.</p>'; return }
+    const snap=await getDocs(query(collection(db,'sos_alerts'),orderBy('timestamp','desc')));
+    if(snap.empty){ el.innerHTML='<p class="empty-msg">No alerts yet.</p>'; return }
     let html='';
     snap.forEach(d=>{
       const x=d.data();
@@ -981,21 +1165,20 @@ async function loadHistory(){
       </div>`;
     });
     el.innerHTML=html;
-  } catch(e){ el.innerHTML='<p class="empty-msg">Error loading.</p>'; }
+  }catch(e){ el.innerHTML='<p class="empty-msg">Error.</p>'; }
 }
 
-/* ===== TOAST ===== */
-window.toast = function(msg, type=''){
-  const t = document.getElementById('toast');
+/* ---- TOAST ---- */
+window.toast=function(msg,type=''){
+  const t=document.getElementById('toast');
   t.textContent=msg; t.className='toast show'+(type?' '+type:'');
-  clearTimeout(t._t);
-  t._t=setTimeout(()=>t.className='toast',3500);
+  clearTimeout(t._t); t._t=setTimeout(()=>t.className='toast',3500);
 }
 
-/* ===== INIT ===== */
+/* ---- INIT ---- */
 buildTicker();
-const fcN = localStorage.getItem('sg_fc');
-if(fcN) document.getElementById('fcNameInp').value = fcN;
+const fcN=localStorage.getItem('sg_fc');
+if(fcN) document.getElementById('fcNameInp').value=fcN;
 renderContacts();
 </script>
 </body>
