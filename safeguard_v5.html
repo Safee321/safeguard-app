@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>SafeGuard — Women's Safety App</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#080808;--bg2:#101010;--bg3:#1a1a1a;--bg4:#222;
+  --red:#ff2d2d;--red-dim:rgba(255,45,45,0.15);--red-glow:rgba(255,45,45,0.35);
+  --green:#00e87a;--green-dim:rgba(0,232,122,0.1);
+  --blue:#4466ff;--orange:#ff8800;--purple:#9944ff;
+  --text:#fff;--text2:#aaa;--text3:#555;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+}
+html,body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(255,45,45,0.06),transparent);pointer-events:none;z-index:0}
+::-webkit-scrollbar{width:0}
+
+/* HEADER */
+.hdr{position:sticky;top:0;z-index:100;background:rgba(8,8,8,0.92);backdrop-filter:blur(24px);border-bottom:0.5px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.hdr-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:19px;letter-spacing:-0.5px;display:flex;align-items:center;gap:10px}
+.hdr-logo .accent{color:var(--red)}
+.shield{width:32px;height:32px;background:linear-gradient(135deg,#ff2d2d,#aa0000);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 12px rgba(255,45,45,0.4)}
+.active-pill{background:rgba(0,232,122,0.08);border:0.5px solid rgba(0,232,122,0.25);color:var(--green);font-size:11px;font-weight:500;padding:5px 12px;border-radius:30px;display:flex;align-items:center;gap:6px}
+.pulse-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pDot 2s infinite}
+@keyframes pDot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,232,122,0.5)}50%{opacity:0.5;box-shadow:0 0 0 4px rgba(0,232,122,0)}}
+
+/* LOCATION BAR */
+.loc-bar{padding:9px 20px;font-size:11px;letter-spacing:0.3px;display:flex;align-items:center;gap:7px;border-bottom:0.5px solid var(--border);background:rgba(0,232,122,0.04);color:var(--text3);transition:color 0.3s,background 0.3s}
+.loc-bar.ready{color:var(--green);background:rgba(0,232,122,0.05)}
+.loc-bar.err{color:var(--red);background:rgba(255,45,45,0.05)}
+
+/* ===== EMERGENCY TICKER ===== */
+.emergency-ticker{
+  background:#0d0000;
+  border-bottom:0.5px solid rgba(255,45,45,0.2);
+  padding:0;
+  overflow:hidden;
+  position:relative;
+  height:42px;
+}
+.ticker-label{
+  position:absolute;left:0;top:0;bottom:0;
+  background:var(--red);
+  padding:0 14px;
+  display:flex;align-items:center;
+  font-family:'Syne',sans-serif;
+  font-size:10px;font-weight:700;
+  letter-spacing:1.5px;
+  z-index:2;
+  white-space:nowrap;
+  gap:6px;
+}
+.ticker-label::after{
+  content:'';
+  position:absolute;right:-10px;top:0;bottom:0;
+  width:10px;
+  background:linear-gradient(90deg,var(--red),transparent);
+}
+.ticker-track{
+  display:flex;
+  align-items:center;
+  height:100%;
+  padding-left:120px;
+  animation:tickerScroll 28s linear infinite;
+  white-space:nowrap;
+}
+.ticker-track:hover{animation-play-state:paused}
+@keyframes tickerScroll{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+.ticker-item{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:0 20px;
+  cursor:pointer;
+  transition:opacity 0.2s;
+  text-decoration:none;
+  color:inherit;
+}
+.ticker-item:active{opacity:0.7}
+.ticker-dot{
+  width:7px;height:7px;
+  border-radius:50%;
+  flex-shrink:0;
+}
+.ticker-name{font-size:11px;font-weight:500;color:var(--text2);white-space:nowrap}
+.ticker-num{
+  font-family:'Syne',sans-serif;
+  font-size:13px;font-weight:700;
+  white-space:nowrap;
+}
+.ticker-num.police{color:#4499ff}
+.ticker-num.fire{color:#ff6622}
+.ticker-num.amb{color:#44dd88}
+.ticker-num.women{color:#ff44aa}
+.ticker-num.child{color:#ffaa22}
+.ticker-sep{color:var(--text3);padding:0 8px;font-size:16px}
+
+/* TABS */
+.tabs{display:flex;background:var(--bg2);border-bottom:0.5px solid var(--border);position:sticky;top:61px;z-index:90;overflow-x:auto}
+.tab{flex:1;min-width:60px;padding:13px 6px;text-align:center;font-size:11px;font-weight:500;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.25s;letter-spacing:0.4px;white-space:nowrap}
+.tab.active{color:var(--red);border-bottom-color:var(--red)}
+
+/* PAGE */
+.page{display:none;padding:20px;flex-direction:column;gap:16px;animation:pageIn 0.3s cubic-bezier(0.34,1.56,0.64,1)}
+.page.active{display:flex}
+@keyframes pageIn{from{opacity:0;transform:translateY(14px) scale(0.99)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* CARD */
+.card{background:rgba(255,255,255,0.025);border:0.5px solid var(--border);border-radius:18px;padding:20px;position:relative;overflow:hidden;transition:border-color 0.3s}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.07),transparent)}
+.card-label{font-size:10px;font-weight:500;color:var(--text3);letter-spacing:1.8px;text-transform:uppercase;margin-bottom:16px}
+
+/* EMERGENCY CARDS GRID */
+.emergency-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:4px;
+}
+.em-card{
+  background:rgba(255,255,255,0.02);
+  border:0.5px solid var(--border);
+  border-radius:14px;
+  padding:14px;
+  display:flex;flex-direction:column;gap:6px;
+  cursor:pointer;
+  text-decoration:none;
+  transition:all 0.2s;
+  position:relative;
+  overflow:hidden;
+}
+.em-card::before{
+  content:'';
+  position:absolute;inset:0;
+  opacity:0;
+  transition:opacity 0.2s;
+  border-radius:14px;
+}
+.em-card:active{transform:scale(0.96)}
+.em-card:active::before{opacity:1}
+.em-card.police{border-color:rgba(68,153,255,0.2)}
+.em-card.police::before{background:rgba(68,153,255,0.08)}
+.em-card.fire{border-color:rgba(255,102,34,0.2)}
+.em-card.fire::before{background:rgba(255,102,34,0.08)}
+.em-card.amb{border-color:rgba(68,221,136,0.2)}
+.em-card.amb::before{background:rgba(68,221,136,0.08)}
+.em-card.women{border-color:rgba(255,68,170,0.2)}
+.em-card.women::before{background:rgba(255,68,170,0.08)}
+.em-card.child{border-color:rgba(255,170,34,0.2)}
+.em-card.child::before{background:rgba(255,170,34,0.08)}
+.em-card.disaster{border-color:rgba(153,68,255,0.2)}
+.em-card.disaster::before{background:rgba(153,68,255,0.08)}
+.em-icon{font-size:22px;margin-bottom:2px}
+.em-label{font-size:10px;color:var(--text3);letter-spacing:0.5px}
+.em-number{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;letter-spacing:-0.5px}
+.em-number.police{color:#4499ff}
+.em-number.fire{color:#ff6622}
+.em-number.amb{color:#44dd88}
+.em-number.women{color:#ff44aa}
+.em-number.child{color:#ffaa22}
+.em-number.disaster{color:#9944ff}
+.em-sublabel{font-size:9px;color:var(--text3);letter-spacing:0.3px}
+.em-call-badge{
+  position:absolute;top:10px;right:10px;
+  background:rgba(255,255,255,0.06);
+  border-radius:6px;padding:3px 7px;
+  font-size:9px;color:var(--text3);
+  font-weight:500;letter-spacing:0.5px;
+}
+
+/* LOCATION-BASED NEARBY */
+.nearby-card{
+  background:rgba(68,153,255,0.04);
+  border:0.5px solid rgba(68,153,255,0.15);
+  border-radius:14px;
+  padding:14px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:2px;
+}
+.nearby-info{flex:1}
+.nearby-type{font-size:10px;color:#4499ff;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px}
+.nearby-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px}
+.nearby-dist{font-size:11px;color:var(--text3)}
+.nearby-call{
+  background:rgba(68,153,255,0.12);
+  border:0.5px solid rgba(68,153,255,0.3);
+  color:#4499ff;
+  border-radius:10px;
+  padding:10px 14px;
+  font-family:'Syne',sans-serif;
+  font-size:13px;font-weight:700;
+  text-decoration:none;
+  white-space:nowrap;
+}
+
+/* SOS */
+.sos-section{display:flex;flex-direction:column;align-items:center;gap:20px;padding:12px 0 8px}
+.sos-outer{position:relative;width:230px;height:230px;display:flex;align-items:center;justify-content:center}
+.ring{position:absolute;border-radius:50%;border:1.5px solid rgba(255,45,45,0.2);animation:ringOut 3s ease-out infinite}
+.ring-1{width:175px;height:175px;animation-delay:0s}
+.ring-2{width:205px;height:205px;animation-delay:0.8s}
+.ring-3{width:230px;height:230px;animation-delay:1.6s}
+@keyframes ringOut{0%{opacity:0.8;transform:scale(0.85)}100%{opacity:0;transform:scale(1.05)}}
+.sos-btn{width:148px;height:148px;border-radius:50%;background:radial-gradient(circle at 38% 32%,#ff5555 0%,#dd1111 45%,#880000 100%);border:none;color:white;font-family:'Syne',sans-serif;font-weight:800;font-size:26px;letter-spacing:4px;cursor:pointer;position:relative;z-index:5;box-shadow:0 0 0 1px rgba(255,255,255,0.08) inset,0 0 60px rgba(255,45,45,0.45),0 0 120px rgba(255,45,45,0.2),0 8px 32px rgba(0,0,0,0.6);transition:transform 0.12s,box-shadow 0.12s}
+.sos-btn:active{transform:scale(0.91);box-shadow:0 0 0 1px rgba(255,255,255,0.1) inset,0 0 80px rgba(255,45,45,0.8),0 0 160px rgba(255,45,45,0.4),0 4px 16px rgba(0,0,0,0.6)}
+.sos-btn.firing{animation:sosFire 0.6s ease}
+@keyframes sosFire{0%{transform:scale(1)}30%{transform:scale(0.88)}60%{transform:scale(1.06)}100%{transform:scale(1)}}
+.sos-hint{font-size:12px;color:var(--text3);text-align:center;line-height:1.8}
+.sos-hint strong{color:var(--text2);font-weight:500}
+.escape-btn{width:100%;background:rgba(68,102,255,0.07);border:0.5px solid rgba(68,102,255,0.25);border-radius:13px;padding:17px;color:#7788ff;font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.escape-btn:active{background:rgba(68,102,255,0.14);transform:scale(0.98)}
+
+/* LOCATION GRID */
+.loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.loc-box{background:rgba(0,232,122,0.05);border:0.5px solid rgba(0,232,122,0.12);border-radius:12px;padding:12px 14px}
+.loc-box-label{font-size:10px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:5px}
+.loc-box-val{font-size:14px;color:var(--green);font-family:'Syne',sans-serif;font-weight:700;letter-spacing:-0.3px}
+.loc-acc-row{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;padding-top:4px}
+.maps-link{font-size:11px;color:#4488ff;text-decoration:none;display:flex;align-items:center;gap:4px}
+
+/* CHECK-IN */
+.ci-description{font-size:13px;color:var(--text3);line-height:1.8;margin-bottom:18px}
+.ci-description em{color:var(--red);font-style:normal;font-weight:500}
+.timer-center{display:flex;flex-direction:column;align-items:center;gap:16px;margin-bottom:4px}
+.timer-svg-wrap{position:relative;width:140px;height:140px}
+.t-svg{width:140px;height:140px;transform:rotate(-90deg)}
+.t-track{fill:none;stroke:rgba(255,255,255,0.06);stroke-width:5}
+.t-prog{fill:none;stroke:var(--green);stroke-width:5;stroke-linecap:round;stroke-dasharray:366;stroke-dashoffset:366;transition:stroke-dashoffset 1s linear,stroke 0.4s}
+.t-prog.warn{stroke:#ffaa22}
+.t-prog.danger{stroke:var(--red)}
+.timer-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.timer-num{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--text);letter-spacing:-1px}
+.timer-sub{font-size:10px;color:var(--text3);letter-spacing:0.5px}
+.intervals{display:flex;gap:8px;width:100%}
+.int-opt{flex:1;padding:10px;border-radius:10px;border:0.5px solid var(--border2);background:transparent;color:var(--text3);font-size:12px;cursor:pointer;text-align:center;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.int-opt.on{border-color:var(--green);color:var(--green);background:var(--green-dim)}
+.ci-start{width:100%;padding:17px;border-radius:13px;background:linear-gradient(135deg,var(--red),#cc0000);border:none;color:white;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;cursor:pointer;box-shadow:0 4px 24px rgba(255,45,45,0.3);transition:all 0.2s;margin-top:4px}
+.ci-start:active{transform:scale(0.98)}
+.ci-start.on{background:rgba(255,255,255,0.05);box-shadow:none;border:0.5px solid var(--border2);color:var(--text2)}
+.safe-btn{width:100%;padding:20px;border-radius:13px;background:transparent;border:1.5px solid var(--green);color:var(--green);font-family:'Syne',sans-serif;font-size:17px;font-weight:700;letter-spacing:2px;cursor:pointer;transition:all 0.15s;box-shadow:0 0 30px rgba(0,232,122,0.1)}
+.safe-btn:active{background:rgba(0,232,122,0.08);transform:scale(0.97)}
+
+/* GUARDIAN */
+.g-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.g-badge{padding:5px 13px;border-radius:30px;font-size:10px;font-weight:700;font-family:'Syne',sans-serif;letter-spacing:1.5px}
+.g-badge.off{background:rgba(255,45,45,0.08);color:var(--red);border:0.5px solid rgba(255,45,45,0.25)}
+.g-badge.on{background:rgba(0,232,122,0.08);color:var(--green);border:0.5px solid rgba(0,232,122,0.25);animation:gBadgeGlow 2.5s infinite}
+@keyframes gBadgeGlow{0%,100%{box-shadow:0 0 6px rgba(0,232,122,0.2)}50%{box-shadow:0 0 18px rgba(0,232,122,0.5)}}
+.g-toggle{width:100%;padding:15px;border-radius:13px;background:rgba(0,232,122,0.06);border:0.5px solid rgba(0,232,122,0.2);color:var(--green);font-size:14px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.g-toggle:active{transform:scale(0.98)}
+.g-link-box{background:#0c0c0c;border:0.5px solid var(--border2);border-radius:11px;padding:13px 14px;font-size:11px;color:#4488ff;word-break:break-all;text-align:center;line-height:1.8;margin:13px 0}
+.g-share-row{display:flex;gap:8px}
+.g-share-btn{flex:1;padding:12px;border-radius:11px;background:transparent;border:0.5px solid var(--border2);color:var(--text2);font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+.g-share-btn.wa{color:var(--green);border-color:rgba(0,232,122,0.25)}
+.g-stat-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:13px}
+
+/* CONTACTS */
+.inp-field{width:100%;background:var(--bg3);border:0.5px solid var(--border2);border-radius:11px;padding:13px 15px;color:var(--text);font-size:13px;outline:none;font-family:'DM Sans',sans-serif;margin-bottom:9px;transition:border-color 0.2s;-webkit-appearance:none}
+.inp-field:focus{border-color:rgba(255,45,45,0.5)}
+.inp-row{display:flex;gap:8px;align-items:flex-start}
+.inp-row .inp-field{margin:0;flex:1}
+.add-contact-btn{background:var(--red);border:none;color:white;border-radius:11px;padding:13px 16px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;box-shadow:0 2px 12px rgba(255,45,45,0.25);transition:all 0.2s}
+.add-contact-btn:active{transform:scale(0.96)}
+.hint-txt{font-size:11px;color:var(--text3);margin-top:5px;line-height:1.6}
+.c-item{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.02);border:0.5px solid var(--border);border-radius:12px;padding:13px 14px;margin-top:9px;animation:slideIn 0.25s cubic-bezier(0.34,1.56,0.64,1)}
+@keyframes slideIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+.c-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--red),#880000);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;flex-shrink:0}
+.c-name{font-size:13px;font-weight:500;color:var(--text)}
+.c-num{font-size:11px;color:var(--text3);margin-top:3px}
+.c-del{margin-left:auto;background:none;border:none;color:var(--text3);font-size:18px;cursor:pointer;padding:4px;transition:color 0.2s}
+.c-del:active{color:var(--red)}
+.save-btn-sm{background:rgba(255,255,255,0.06);border:0.5px solid var(--border2);color:var(--text2);border-radius:11px;padding:13px 16px;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;transition:all 0.2s}
+
+/* HISTORY */
+.hist-item{padding:13px 0;border-bottom:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.hist-coords{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--green);margin-bottom:4px}
+.hist-time{font-size:10px;color:var(--text3)}
+.hist-maps{background:rgba(0,232,122,0.07);border:0.5px solid rgba(0,232,122,0.2);color:var(--green);border-radius:9px;padding:6px 11px;font-size:10px;font-weight:500;text-decoration:none;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.empty-msg{font-size:13px;color:var(--text3);text-align:center;padding:24px;line-height:1.7}
+
+/* FAKE CALL */
+.fc-screen{display:none;position:fixed;inset:0;background:#06061a;z-index:500;flex-direction:column;align-items:center;justify-content:space-between;padding:90px 32px 64px;animation:fcSlide 0.3s cubic-bezier(0.34,1.56,0.64,1)}
+.fc-screen.show{display:flex}
+@keyframes fcSlide{from{opacity:0;transform:scale(1.04)}to{opacity:1;transform:scale(1)}}
+.fc-label{font-size:12px;color:#7777cc;letter-spacing:2.5px;text-transform:uppercase;text-align:center;margin-bottom:14px}
+.fc-avatar{width:108px;height:108px;border-radius:50%;background:linear-gradient(135deg,#4455ff,#9944ff);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:40px;font-weight:800;color:white;margin:0 auto 20px;animation:fcRing 2s infinite}
+@keyframes fcRing{0%,100%{box-shadow:0 0 0 0 rgba(80,80,255,0.5)}40%{box-shadow:0 0 0 16px rgba(80,80,255,0.2)}80%{box-shadow:0 0 0 32px rgba(80,80,255,0)}}
+.fc-name{font-family:'Syne',sans-serif;font-size:34px;font-weight:800;text-align:center;color:white}
+.fc-type{font-size:14px;color:#7777cc;text-align:center;margin-top:8px}
+.fc-actions{display:flex;justify-content:space-around;width:100%}
+.fc-action-btn{width:74px;height:74px;border-radius:50%;border:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;transition:transform 0.12s}
+.fc-action-btn:active{transform:scale(0.9)}
+.fc-action-btn span{font-size:11px;color:white;font-family:'DM Sans',sans-serif}
+.fc-decline{background:linear-gradient(135deg,#ff4444,#cc0000);box-shadow:0 4px 20px rgba(255,45,45,0.4)}
+.fc-accept{background:linear-gradient(135deg,#44cc44,#226622);box-shadow:0 4px 20px rgba(50,200,50,0.4)}
+.fc-icon{font-size:26px}
+
+/* TOAST */
+.toast{position:fixed;bottom:36px;left:50%;transform:translateX(-50%) translateY(16px);background:rgba(16,16,16,0.95);backdrop-filter:blur(20px);border:0.5px solid var(--border2);color:var(--text);padding:12px 22px;border-radius:40px;font-size:13px;font-weight:500;opacity:0;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);z-index:600;white-space:nowrap;font-family:'DM Sans',sans-serif;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.red{border-color:rgba(255,45,45,0.4);color:#ff7777}
+.toast.green{border-color:rgba(0,232,122,0.4);color:var(--green)}
+.toast.blue{border-color:rgba(100,130,255,0.4);color:#8899ff}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-logo">
+    <div class="shield">🛡</div>
+    Safe<span class="accent">Guard</span>
+  </div>
+  <div class="active-pill">
+    <div class="pulse-dot"></div>Active
+  </div>
+</div>
+
+<!-- LOCATION BAR -->
+<div class="loc-bar" id="locBar">📍 Acquiring location...</div>
+
+<!-- EMERGENCY TICKER -->
+<div class="emergency-ticker">
+  <div class="ticker-label">🚨 EMERGENCY</div>
+  <div class="ticker-track" id="tickerTrack">
+    <!-- filled by JS -->
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="showTab('home',this)">Home</div>
+  <div class="tab" onclick="showTab('emergency',this)">Emergency</div>
+  <div class="tab" onclick="showTab('checkin',this)">Check-in</div>
+  <div class="tab" onclick="showTab('guardian',this)">Guardian</div>
+  <div class="tab" onclick="showTab('contacts',this)">Contacts</div>
+  <div class="tab" onclick="showTab('history',this)">History</div>
+</div>
+
+<!-- ======= HOME ======= -->
+<div class="page active" id="tab-home">
+  <div class="sos-section">
+    <div class="sos-outer">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
+      <button class="sos-btn" id="sosBtn" onclick="triggerSOS()">SOS</button>
+    </div>
+    <p class="sos-hint" id="sosHint">
+      <strong>Tap to alert all contacts</strong><br>
+      WhatsApp + Google Maps location
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Escape Feature</div>
+    <button class="escape-btn" onclick="startFakeCall()">
+      📲 &nbsp;Trigger Fake Incoming Call
+    </button>
+  </div>
+
+  <div class="card">
+    <div class="card-label">Current Location</div>
+    <div class="loc-grid">
+      <div class="loc-box">
+        <div class="loc-box-label">Latitude</div>
+        <div class="loc-box-val" id="latVal">--</div>
+      </div>
+      <div class="loc-box">
+        <div class="loc-box-label">Longitude</div>
+        <div class="loc-box-val" id="lngVal">--</div>
+      </div>
+      <div class="loc-acc-row">
+        <span style="font-size:11px;color:var(--text3)">Accuracy</span>
+        <span style="font-size:12px;color:var(--text2)" id="accVal">--</span>
+      </div>
+    </div>
+    <a class="maps-link" id="mapsLink" href="#" target="_blank" style="margin-top:12px;display:none">↗ View on Google Maps</a>
+  </div>
+</div>
+
+<!-- ======= EMERGENCY ======= -->
+<div class="page" id="tab-emergency">
+
+  <div class="card">
+    <div class="card-label">National Emergency Numbers</div>
+    <div class="emergency-grid">
+
+      <a class="em-card police" href="tel:100" onclick="toast('Calling Police...','blue')">
+        <div class="em-call-badge">TAP TO CALL</div>
+        <div class="em-icon">🚔</div>
+        <div class="em-label">Police</div>
+        <div class="em-number police">100</div>
+        <div class="em-sublabel">Emergency Response</div>
+      </a>
+
+      <a class="em-card fire" href="tel:101" onclick="toast('Calling Fire Service...','red')">
+        <div class="em-call-badge">TAP TO CALL</div>
+        <div class="em-icon">🚒</div>
+        <div class="em-label">Fire Service</div>
+        <div class="em-number fire">101</div>
+        <div class="em-sublabel">Fire Emergency</div>
+      </a>
+
+      <a class="em-card amb" href="tel:102" onclick="toast('Calling Ambulance...','green')">
+        <div class="em-call-badge">TAP TO CALL</div>
+        <div class="em-icon">🚑</div>
+        <div class="em-label">Ambulance</div>
+        <div class="em-number amb">102</div>
+        <div class="em-sublabel">Medical Emergency</div>
+      </a>
+
+      <a class="em-card women" href="tel:1091" onclick="toast('Calling Women Helpline...','blue')">
+        <div class="em-call-badge">TAP TO CALL</div>
+        <div class="em-icon">👩</div>
+        <div class="em-label">Women Helpline</div>
+        <div class="em-number women">1091</div>
+        <div class="em-sublabel">Women in Distress</div>
+      </a>
+
+      <a class="em-card child" href="tel:1098" onclick="toast('Calling Childline...','blue')">
+        <div class="em-call-badge">TAP TO CALL</div>
+        <div class="em-icon">👧</div>
+        <div class="em-label">Childline</div>
+        <div class="em-number child">1098</div>
+        <div class="em-sublabel">Child Protection</div>
+      </a>
+
+      <a class="em-card disaster" href="tel:108" onclick="toast('Calling Disaster Helpline...','blue')">
+        <div class="em-call-badge">TAP TO CALL</div>
+        <div class="em-icon">🆘</div>
+        <div class="em-label">Disaster Help</div>
+        <div class="em-number disaster">108</div>
+        <div class="em-sublabel">NDRF Helpline</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- HARYANA LOCAL NUMBERS -->
+  <div class="card">
+    <div class="card-label">Haryana State Numbers</div>
+    <div class="emergency-grid">
+
+      <a class="em-card police" href="tel:1800-180-0060" onclick="toast('Calling Haryana Police...','blue')">
+        <div class="em-call-badge">TAP TO CALL</div>
+        <div class="em-icon">👮</div>
+        <div class="em-label">Haryana Police</div>
+        <div class="em-number police" style="font-size:13px">1800-180-0060</div>
+        <div class="em-sublabel">Toll Free 24x7</div>
+      </a>
+
+      <a class="em-card women" href="tel:1091" onclick="toast('Calling Durga Shakti...','blue')">
+        <div class="em-call-badge">TAP TO CALL</div>
+        <div class="em-icon">💪</div>
+        <div class="em-label">Durga Shakti</div>
+        <div class="em-number women">1091</div>
+        <div class="em-sublabel">Haryana Women</div>
+      </a>
+
+      <a class="em-card amb" href="tel:112" onclick="toast('Calling 112 Emergency...','green')">
+        <div class="em-call-badge">TAP TO CALL</div>
+        <div class="em-icon">🆘</div>
+        <div class="em-label">Emergency</div>
+        <div class="em-number amb">112</div>
+        <div class="em-sublabel">All-in-one Helpline</div>
+      </a>
+
+      <a class="em-card fire" href="tel:01664-244555" onclick="toast('Calling Narnaul Fire...','red')">
+        <div class="em-call-badge">TAP TO CALL</div>
+        <div class="em-icon">🔥</div>
+        <div class="em-label">Narnaul Fire</div>
+        <div class="em-number fire" style="font-size:12px">01664-244555</div>
+        <div class="em-sublabel">Mahendragarh Dist</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- NEARBY SECTION -->
+  <div class="card">
+    <div class="card-label">Nearby Help — Based on Your Location</div>
+    <div id="nearbyList">
+      <p class="empty-msg">📍 Location access do — nearby stations dikhenge</p>
+    </div>
+  </div>
+
+  <!-- IMPORTANT NOTE -->
+  <div class="card" style="background:rgba(255,170,0,0.04);border-color:rgba(255,170,0,0.15)">
+    <div style="font-size:10px;color:#ffaa22;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">Important Note</div>
+    <p style="font-size:12px;color:var(--text3);line-height:1.8">
+      • <strong style="color:var(--text2)">112</strong> — Sabse fast response, sabse important<br>
+      • <strong style="color:var(--text2)">1091</strong> — Women specifically ke liye<br>
+      • Yeh numbers 24x7 free hain, kisi bhi phone se<br>
+      • Network nahi ho toh bhi <strong style="color:var(--text2)">112</strong> kaam karta hai
+    </p>
+  </div>
+
+</div>
+
+<!-- ======= CHECK-IN ======= -->
+<div class="page" id="tab-checkin">
+  <div class="card">
+    <div class="card-label">Safety Check-in</div>
+    <p class="ci-description">Har X minutes mein confirm karo. Miss ho gaya toh <em>auto SOS</em> chala jayega.</p>
+    <div class="timer-center">
+      <div class="timer-svg-wrap">
+        <svg class="t-svg" viewBox="0 0 140 140">
+          <circle class="t-track" cx="70" cy="70" r="58"/>
+          <circle class="t-prog" id="tProg" cx="70" cy="70" r="58"/>
+        </svg>
+        <div class="timer-inner">
+          <div class="timer-num" id="tNum">--</div>
+          <div class="timer-sub" id="tSub">INACTIVE</div>
+        </div>
+      </div>
+      <div class="intervals">
+        <div class="int-opt on" onclick="pickInt(5,this)">5 min</div>
+        <div class="int-opt" onclick="pickInt(10,this)">10 min</div>
+        <div class="int-opt" onclick="pickInt(15,this)">15 min</div>
+        <div class="int-opt" onclick="pickInt(30,this)">30 min</div>
+      </div>
+    </div>
+    <button class="ci-start" id="ciBtn" onclick="ciAction()">START CHECK-IN</button>
+  </div>
+  <div class="card" id="safeCard" style="display:none">
+    <button class="safe-btn" onclick="iAmSafe()">✓ &nbsp;I AM SAFE</button>
+    <p style="font-size:11px;color:var(--text3);text-align:center;margin-top:12px;line-height:1.6">Timer khatam hone se pehle press karo</p>
+  </div>
+</div>
+
+<!-- ======= GUARDIAN ======= -->
+<div class="page" id="tab-guardian">
+  <div class="card">
+    <div class="g-header">
+      <div>
+        <div style="font-size:15px;font-weight:500;margin-bottom:4px">Guardian Mode</div>
+        <div style="font-size:12px;color:var(--text3)">Family real-time location dekh sakti hai</div>
+      </div>
+      <div class="g-badge off" id="gBadge">OFF</div>
+    </div>
+    <button class="g-toggle" id="gBtn" onclick="toggleGuardian()">👁 &nbsp;Enable Guardian Mode</button>
+    <div id="gLinkSection" style="display:none">
+      <div class="g-link-box" id="gLink">Link generate ho raha hai...</div>
+      <div class="g-share-row">
+        <button class="g-share-btn" onclick="copyGLink()">📋 Copy</button>
+        <button class="g-share-btn wa" onclick="shareGWA()">📱 WhatsApp</button>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-label">Live Status</div>
+    <div class="g-stat-row"><span style="color:var(--text3)">Broadcast</span><span id="bcastTxt" style="color:var(--text3)">Inactive</span></div>
+    <div class="g-stat-row"><span style="color:var(--text3)">Last update</span><span id="lastUpdTxt" style="color:var(--text3)">--</span></div>
+  </div>
+</div>
+
+<!-- ======= CONTACTS ======= -->
+<div class="page" id="tab-contacts">
+  <div class="card">
+    <div class="card-label">Add Trusted Contact</div>
+    <input class="inp-field" id="newName" type="text" placeholder="Name (e.g. Ammi)" maxlength="20"/>
+    <div class="inp-row">
+      <input class="inp-field" id="newNum" type="tel" placeholder="91XXXXXXXXXX"/>
+      <button class="add-contact-btn" onclick="addContact()">Add</button>
+    </div>
+    <p class="hint-txt">India: 91 + 10 digit • Max 5 contacts</p>
+  </div>
+  <div class="card">
+    <div class="card-label">Saved Contacts &nbsp;<span id="cCount" style="color:var(--text2)">0</span>/5</div>
+    <div id="cList"><p class="empty-msg">No contacts added yet.</p></div>
+  </div>
+  <div class="card">
+    <div class="card-label">Fake Call — Caller Name</div>
+    <div class="inp-row">
+      <input class="inp-field" id="fcNameInp" type="text" placeholder="e.g. Ammi" maxlength="20" style="margin:0"/>
+      <button class="save-btn-sm" onclick="saveFcName()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======= HISTORY ======= -->
+<div class="page" id="tab-history">
+  <div class="card">
+    <div class="card-label">Alert History</div>
+    <div id="histLog"><p class="empty-msg">No SOS alerts yet.</p></div>
+  </div>
+</div>
+
+<!-- FAKE CALL SCREEN -->
+<div class="fc-screen" id="fcScreen">
+  <div style="text-align:center">
+    <div class="fc-label">Incoming Call</div>
+    <div class="fc-avatar" id="fcInitial">A</div>
+    <div class="fc-name" id="fcName">Ammi</div>
+    <div class="fc-type">Mobile</div>
+  </div>
+  <div class="fc-actions">
+    <button class="fc-action-btn fc-decline" onclick="endFakeCall()">
+      <div class="fc-icon">✕</div><span>Decline</span>
+    </button>
+    <button class="fc-action-btn fc-accept" onclick="acceptFakeCall()">
+      <div class="fc-icon">✆</div><span>Accept</span>
+    </button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, orderBy, query, doc, setDoc }
+  from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const fbConfig = {
+  apiKey: "AIzaSyDDT161dGkUyWEHLOgpPSCqX62-HKL4twU",
+  authDomain: "safetyapp-a05fc.firebaseapp.com",
+  projectId: "safetyapp-a05fc",
+  storageBucket: "safetyapp-a05fc.firebasestorage.app",
+  messagingSenderId: "295442562452",
+  appId: "1:295442562452:web:c8bf3bfcbefbf5e337e381"
+};
+const fbApp = initializeApp(fbConfig);
+const db = getFirestore(fbApp);
+
+let lat=null,lng=null,acc=null;
+let ciActive=false,ciSecs=0,ciMins=5,ciTimer=null;
+let guardActive=false,guardId=null,guardTimer=null;
+let fcTimer=null;
+
+/* ===== TICKER ===== */
+const EMERGENCY_NUMBERS = [
+  {type:'police', label:'Police',        num:'100',             icon:'🚔'},
+  {type:'fire',   label:'Fire Service',  num:'101',             icon:'🚒'},
+  {type:'amb',    label:'Ambulance',     num:'102',             icon:'🚑'},
+  {type:'amb',    label:'Emergency',     num:'112',             icon:'🆘'},
+  {type:'women',  label:'Women Helpline',num:'1091',            icon:'👩'},
+  {type:'child',  label:'Childline',     num:'1098',            icon:'👧'},
+  {type:'women',  label:'Durga Shakti',  num:'1091',            icon:'💪'},
+  {type:'fire',   label:'Narnaul Fire',  num:'01664-244555',    icon:'🔥'},
+  {type:'police', label:'Haryana Police',num:'1800-180-0060',   icon:'👮'},
+  {type:'disaster',label:'Disaster',     num:'108',             icon:'🆘'},
+];
+
+function buildTicker(){
+  const track = document.getElementById('tickerTrack');
+  // Duplicate for seamless loop
+  let html = '';
+  for(let r=0;r<2;r++){
+    EMERGENCY_NUMBERS.forEach(n=>{
+      html += `<a class="ticker-item" href="tel:${n.num}">
+        <div class="ticker-dot" style="background:${typeColor(n.type)}"></div>
+        <span class="ticker-name">${n.icon} ${n.label}</span>
+        <span class="ticker-num ${n.type}">${n.num}</span>
+      </a>
+      <span class="ticker-sep">|</span>`;
+    });
+  }
+  track.innerHTML = html;
+}
+
+function typeColor(t){
+  const m={police:'#4499ff',fire:'#ff6622',amb:'#44dd88',women:'#ff44aa',child:'#ffaa22',disaster:'#9944ff'};
+  return m[t]||'#aaa';
+}
+
+/* ===== NEARBY (Location-based) ===== */
+function updateNearby(lat, lng){
+  // Based on coordinates, show relevant local stations
+  // Haryana region detection
+  const el = document.getElementById('nearbyList');
+
+  // Nagina/Mahendragarh area (approx coords: 28.0-28.5 lat, 76.5-77.2 lng)
+  const isHaryana = lat > 27.5 && lat < 30.5 && lng > 74.5 && lng < 77.5;
+  const isMahendragarh = lat > 27.8 && lat < 28.3 && lng > 76.5 && lng < 77.2;
+
+  let stations = [];
+
+  if(isMahendragarh){
+    stations = [
+      {type:'police', name:'Narnaul Police Station', num:'01282-252100', dist:'~3 km'},
+      {type:'fire',   name:'Narnaul Fire Station',   num:'01664-244555', dist:'~4 km'},
+      {type:'amb',    name:'General Hospital Narnaul',num:'01282-252600', dist:'~5 km'},
+      {type:'women',  name:'Mahendragarh Women Cell', num:'01282-254400', dist:'~3 km'},
+    ];
+  } else if(isHaryana){
+    stations = [
+      {type:'police', name:'Haryana Police Control',  num:'100',          dist:'State'},
+      {type:'fire',   name:'Haryana Fire Service',    num:'101',          dist:'State'},
+      {type:'amb',    name:'108 Ambulance Service',   num:'108',          dist:'State'},
+      {type:'women',  name:'Durga Shakti Helpline',   num:'1091',         dist:'State'},
+    ];
+  } else {
+    stations = [
+      {type:'police', name:'National Emergency',      num:'112',          dist:'National'},
+      {type:'women',  name:'Women Helpline',           num:'1091',         dist:'National'},
+      {type:'amb',    name:'Ambulance',                num:'102',          dist:'National'},
+      {type:'fire',   name:'Fire Service',             num:'101',          dist:'National'},
+    ];
+  }
+
+  const colors = {police:'#4499ff',fire:'#ff6622',amb:'#44dd88',women:'#ff44aa'};
+  el.innerHTML = stations.map(s=>`
+    <div class="nearby-card" style="border-color:${colors[s.type]||'#4499ff'}22;background:${colors[s.type]||'#4499ff'}08;margin-bottom:8px">
+      <div class="nearby-info">
+        <div class="nearby-type">${s.type.toUpperCase()}</div>
+        <div class="nearby-name">${s.name}</div>
+        <div class="nearby-dist">${s.dist}</div>
+      </div>
+      <a class="nearby-call" href="tel:${s.num}" style="color:${colors[s.type]||'#4499ff'};border-color:${colors[s.type]||'#4499ff'}44;background:${colors[s.type]||'#4499ff'}10"
+         onclick="toast('Calling ${s.name}...','blue')">${s.num}</a>
+    </div>
+  `).join('');
+}
+
+/* ===== LOCATION ===== */
+if(navigator.geolocation){
+  navigator.geolocation.watchPosition(pos=>{
+    lat = pos.coords.latitude.toFixed(6);
+    lng = pos.coords.longitude.toFixed(6);
+    acc = Math.round(pos.coords.accuracy);
+    document.getElementById('latVal').textContent = lat;
+    document.getElementById('lngVal').textContent = lng;
+    document.getElementById('accVal').textContent = '±'+acc+'m';
+    const lb = document.getElementById('locBar');
+    lb.textContent = '✓  Location active — Ready to send SOS';
+    lb.className = 'loc-bar ready';
+    const ml = document.getElementById('mapsLink');
+    ml.href = `https://maps.google.com/?q=${lat},${lng}`;
+    ml.style.display = 'flex';
+    updateNearby(parseFloat(lat), parseFloat(lng));
+    if(guardActive) broadcastNow();
+  }, ()=>{
+    const lb = document.getElementById('locBar');
+    lb.textContent = '✕  Location access denied';
+    lb.className = 'loc-bar err';
+  }, {enableHighAccuracy:true});
+}
+
+/* ===== TABS ===== */
+window.showTab = function(t, el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.getElementById('tab-'+t).classList.add('active');
+  el.classList.add('active');
+  if(t==='history') loadHistory();
+}
+
+/* ===== CONTACTS ===== */
+function gc(){ return JSON.parse(localStorage.getItem('sg_c')||'[]') }
+function sc(c){ localStorage.setItem('sg_c', JSON.stringify(c)) }
+
+window.addContact = function(){
+  const name = document.getElementById('newName').value.trim();
+  const num  = document.getElementById('newNum').value.trim();
+  if(!name||!num){ toast('Dono fields bharo!','red'); return }
+  if(num.length<10){ toast('Sahi number daalo!','red'); return }
+  const cs = gc();
+  if(cs.length>=5){ toast('Max 5 contacts!','red'); return }
+  if(cs.find(c=>c.number===num)){ toast('Already added!','red'); return }
+  cs.push({name,number:num,id:Date.now()});
+  sc(cs);
+  document.getElementById('newName').value='';
+  document.getElementById('newNum').value='';
+  renderContacts();
+  toast('Contact added!','green');
+}
+
+window.removeContact = function(id){
+  sc(gc().filter(c=>c.id!==id));
+  renderContacts();
+}
+
+function renderContacts(){
+  const cs = gc();
+  document.getElementById('cCount').textContent = cs.length;
+  const el = document.getElementById('cList');
+  if(!cs.length){
+    el.innerHTML='<p class="empty-msg">No contacts added yet.</p>';
+    updateSosHint(); return;
+  }
+  el.innerHTML = cs.map(c=>`
+    <div class="c-item">
+      <div class="c-avatar">${c.name[0].toUpperCase()}</div>
+      <div>
+        <div class="c-name">${c.name}</div>
+        <div class="c-num">+${c.number}</div>
+      </div>
+      <button class="c-del" onclick="removeContact(${c.id})">×</button>
+    </div>`).join('');
+  updateSosHint();
+}
+
+function updateSosHint(){
+  const cs = gc();
+  const el = document.getElementById('sosHint');
+  el.innerHTML = cs.length
+    ? `<strong>Alert: ${cs.map(c=>c.name).join(', ')}</strong><br>WhatsApp + Google Maps`
+    : '<strong style="color:var(--red)">Add contacts first</strong>';
+}
+
+/* ===== CHECK-IN ===== */
+window.pickInt = function(m, el){
+  ciMins = m;
+  document.querySelectorAll('.int-opt').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+}
+window.ciAction = function(){ ciActive ? stopCI() : startCI() }
+
+function startCI(){
+  if(!lat){ toast('Location ready nahi!','red'); return }
+  if(!gc().length){ toast('Contacts add karo!','red'); return }
+  ciActive=true; ciSecs=ciMins*60;
+  document.getElementById('ciBtn').textContent='STOP CHECK-IN';
+  document.getElementById('ciBtn').classList.add('on');
+  document.getElementById('safeCard').style.display='block';
+  runCI(); toast('Check-in started!','green');
+  const cs=gc(), ml=`https://maps.google.com/?q=${lat},${lng}`;
+  const msg=`🛡 SafeGuard Check-in Started\n\nHar ${ciMins} min mein confirm karengi.\nMiss hone par auto SOS aayega.\n\nCurrent location:\n${ml}`;
+  if(cs.length) window.open(`https://wa.me/${cs[0].number}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+function runCI(){
+  clearInterval(ciTimer);
+  ciTimer = setInterval(()=>{
+    ciSecs--; updateTimerUI();
+    if(ciSecs<=0){ clearInterval(ciTimer); toast('Check-in missed! Auto SOS!','red'); triggerSOS(); stopCI(); }
+  },1000);
+}
+
+function updateTimerUI(){
+  const m=Math.floor(ciSecs/60), s=ciSecs%60;
+  document.getElementById('tNum').textContent = m+':'+(s<10?'0':'')+s;
+  document.getElementById('tSub').textContent = 'REMAINING';
+  const pct = ciSecs/(ciMins*60);
+  const circ = 2*Math.PI*58;
+  document.getElementById('tProg').style.strokeDasharray = circ;
+  document.getElementById('tProg').style.strokeDashoffset = circ-circ*pct;
+  document.getElementById('tProg').className = 't-prog'+(pct<0.2?' danger':pct<0.5?' warn':'');
+}
+
+window.iAmSafe = function(){
+  if(!ciActive) return;
+  ciSecs=ciMins*60; runCI(); updateTimerUI();
+  toast('Safe confirmed! Timer reset ✓','green');
+  const cs=gc();
+  if(cs.length&&lat){
+    const msg=`✅ SafeGuard Check-in\n\nMain safe hun!\nTime: ${new Date().toLocaleString('en-IN')}\nLocation: https://maps.google.com/?q=${lat},${lng}`;
+    window.open(`https://wa.me/${cs[0].number}?text=${encodeURIComponent(msg)}`,'_blank');
+  }
+}
+
+function stopCI(){
+  ciActive=false; clearInterval(ciTimer); ciSecs=0;
+  document.getElementById('tNum').textContent='--';
+  document.getElementById('tSub').textContent='INACTIVE';
+  document.getElementById('tProg').style.strokeDashoffset=366;
+  document.getElementById('tProg').className='t-prog';
+  document.getElementById('ciBtn').textContent='START CHECK-IN';
+  document.getElementById('ciBtn').classList.remove('on');
+  document.getElementById('safeCard').style.display='none';
+}
+
+/* ===== GUARDIAN ===== */
+window.toggleGuardian = function(){
+  guardActive = !guardActive;
+  if(guardActive){
+    guardId = 'g_'+Date.now();
+    document.getElementById('gBadge').textContent='ON';
+    document.getElementById('gBadge').className='g-badge on';
+    document.getElementById('gBtn').innerHTML='⏹ &nbsp;Disable Guardian Mode';
+    document.getElementById('gLinkSection').style.display='block';
+    const link = window.location.origin+window.location.pathname+'?view='+guardId;
+    document.getElementById('gLink').textContent = link;
+    document.getElementById('bcastTxt').textContent='🟢 Broadcasting';
+    document.getElementById('bcastTxt').style.color='var(--green)';
+    broadcastNow();
+    guardTimer = setInterval(broadcastNow, 30000);
+    toast('Guardian mode ON!','green');
+  } else {
+    guardActive=false; clearInterval(guardTimer);
+    document.getElementById('gBadge').textContent='OFF';
+    document.getElementById('gBadge').className='g-badge off';
+    document.getElementById('gBtn').innerHTML='👁 &nbsp;Enable Guardian Mode';
+    document.getElementById('gLinkSection').style.display='none';
+    document.getElementById('bcastTxt').textContent='Inactive';
+    document.getElementById('bcastTxt').style.color='var(--text3)';
+    toast('Guardian mode OFF');
+  }
+}
+
+async function broadcastNow(){
+  if(!lat||!guardId) return;
+  try{
+    await setDoc(doc(db,'guardian_sessions',guardId),{
+      latitude:lat,longitude:lng,accuracy:acc,
+      timestamp:new Date().toISOString(),
+      mapsLink:`https://maps.google.com/?q=${lat},${lng}`,active:true
+    });
+    document.getElementById('lastUpdTxt').textContent = new Date().toLocaleTimeString('en-IN');
+    document.getElementById('lastUpdTxt').style.color='var(--green)';
+  } catch(e){ console.error(e) }
+}
+
+window.copyGLink = function(){
+  const l = document.getElementById('gLink').textContent;
+  navigator.clipboard.writeText(l).then(()=>toast('Link copied!','blue')).catch(()=>toast('Copy failed'));
+}
+window.shareGWA = function(){
+  const l = document.getElementById('gLink').textContent;
+  const cs = gc();
+  const msg=`👁 SafeGuard Guardian Mode\n\nMeri real-time location:\n${l}\n\nHar 30 sec mein update hogi.`;
+  window.open(cs.length?`https://wa.me/${cs[0].number}?text=${encodeURIComponent(msg)}`:`https://wa.me/?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+/* ===== FAKE CALL ===== */
+window.saveFcName = function(){
+  const n = document.getElementById('fcNameInp').value.trim();
+  if(!n){ toast('Naam daalo!','red'); return }
+  localStorage.setItem('sg_fc',n);
+  toast('Caller name saved!','green');
+}
+window.startFakeCall = function(){
+  const n = localStorage.getItem('sg_fc')||'Ammi';
+  document.getElementById('fcName').textContent = n;
+  document.getElementById('fcInitial').textContent = n[0].toUpperCase();
+  document.getElementById('fcScreen').classList.add('show');
+  if(navigator.vibrate) navigator.vibrate([600,300,600,300,600]);
+  fcTimer = setTimeout(endFakeCall, 30000);
+}
+window.acceptFakeCall = function(){ clearTimeout(fcTimer); document.getElementById('fcScreen').classList.remove('show'); toast('Call accepted — stay safe!','blue'); }
+window.endFakeCall = function(){ clearTimeout(fcTimer); document.getElementById('fcScreen').classList.remove('show'); }
+
+/* ===== SOS ===== */
+window.triggerSOS = async function(){
+  if(!lat){ toast('Location ready nahi!','red'); return }
+  const cs = gc();
+  if(!cs.length){ toast('Contacts add karo!','red'); return }
+  const btn = document.getElementById('sosBtn');
+  btn.classList.add('firing');
+  setTimeout(()=>btn.classList.remove('firing'),600);
+  const mapsLink = `https://maps.google.com/?q=${lat},${lng}`;
+  const time = new Date().toLocaleString('en-IN');
+  const msg = `🚨 *EMERGENCY SOS ALERT* 🚨\n\nMujhe madad chahiye! Turant aa jao!\n\n📍 *Meri location:*\n${mapsLink}\n\n🕐 Time: ${time}\n📌 Lat: ${lat}, Lng: ${lng}\n\n_SafeGuard Women's Safety App_`;
+  try{
+    await addDoc(collection(db,'sos_alerts'),{
+      timestamp:new Date().toISOString(),latitude:lat,longitude:lng,accuracy:acc,
+      googleMapsLink:mapsLink,contactsAlerted:cs.map(c=>c.name),status:'ACTIVE'
+    });
+  } catch(e){ console.error(e) }
+  cs.forEach((c,i)=>setTimeout(()=>window.open(`https://wa.me/${c.number}?text=${encodeURIComponent(msg)}`,'_blank'),i*2000));
+  toast(`🚨 SOS sent to ${cs.length} contact${cs.length>1?'s':''}!`,'red');
+}
+
+/* ===== HISTORY ===== */
+async function loadHistory(){
+  const el = document.getElementById('histLog');
+  el.innerHTML='<p class="empty-msg">Loading...</p>';
+  try{
+    const snap = await getDocs(query(collection(db,'sos_alerts'),orderBy('timestamp','desc')));
+    if(snap.empty){ el.innerHTML='<p class="empty-msg">No SOS alerts yet.</p>'; return }
+    let html='';
+    snap.forEach(d=>{
+      const x=d.data();
+      const t=new Date(x.timestamp).toLocaleTimeString('en-IN');
+      const dt=new Date(x.timestamp).toLocaleDateString('en-IN');
+      html+=`<div class="hist-item">
+        <div>
+          <div class="hist-coords">${x.latitude}, ${x.longitude}</div>
+          <div class="hist-time">${dt} • ${t}</div>
+          <div class="hist-time">Sent to: ${(x.contactsAlerted||[]).join(', ')}</div>
+        </div>
+        <a href="${x.googleMapsLink}" target="_blank" class="hist-maps">Maps ↗</a>
+      </div>`;
+    });
+    el.innerHTML=html;
+  } catch(e){ el.innerHTML='<p class="empty-msg">Error loading.</p>'; }
+}
+
+/* ===== TOAST ===== */
+window.toast = function(msg, type=''){
+  const t = document.getElementById('toast');
+  t.textContent=msg; t.className='toast show'+(type?' '+type:'');
+  clearTimeout(t._t);
+  t._t=setTimeout(()=>t.className='toast',3500);
+}
+
+/* ===== INIT ===== */
+buildTicker();
+const fcN = localStorage.getItem('sg_fc');
+if(fcN) document.getElementById('fcNameInp').value = fcN;
+renderContacts();
+</script>
+</body>
+</html>
